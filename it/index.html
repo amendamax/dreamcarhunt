@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamCarHunt™ | Motore AI di Ricerca Auto Rare in Europa</title>
+    <meta name="description" content="Caccia alle auto di prestigio e unicorni di fabbrica in tutta Europa. Ricerca chirurgica per codici PR (VW6, 9M9, 1BK) e arbitraggio valutario Svezia - Italia.">
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="DreamCarHunt™ — European AI Car Hunter">
+    <meta property="og:description" content="Troviamo le auto che tutti gli altri perdono. Arbitraggio valutario dai paesi nordici e verifica chirurgica dei codici di fabbrica.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dreamcarhunt.com/it/">
+    
+    <!-- Hreflang Tags for International SEO -->
+    <link rel="alternate" hreflang="en" href="https://dreamcarhunt.com/" />
+    <link rel="alternate" hreflang="ro" href="https://dreamcarhunt.com/ro/" />
+    <link rel="alternate" hreflang="it" href="https://dreamcarhunt.com/it/" />
+    <link rel="alternate" hreflang="x-default" href="https://dreamcarhunt.com/" />
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AutoDealer",
+      "name": "DreamCarHunt",
+      "url": "https://dreamcarhunt.com/it/",
+      "description": "Motore Paneuropeo di Arbitraggio e Ricerca Auto Rare. Trova specifiche esclusive di fabbrica (VW6, 9M9, 1BK) in Svezia e Germania.",
+      "telephone": "+393209481876",
+      "priceRange": "EUR",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Garessio",
+        "addressRegion": "Cuneo",
+        "addressCountry": "IT"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Vasile Bratu"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="top-bar">
+        <span>⚡ <strong>RADAR NORDICO ATTIVO:</strong> Scansione in tempo reale dei mercati in Svezia, Germania, Italia e Francia. Arbitraggio valutario SEK/EUR live.</span>
+    </div>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="/it/" class="logo">
+                <span class="logo-icon"><i class="fa-solid fa-crosshairs"></i></span>
+                <span class="logo-text">DREAMCAR<strong>HUNT</strong></span>
+                <span class="logo-tag">AI 2.0</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#how-it-works">Come Funziona</a>
+                <a href="#unicorns">Unicorni di Fabbrica</a>
+                <a href="#arbitrage">Arbitraggio Svezia</a>
+                
+                <!-- Language Switcher -->
+                <div class="lang-switcher">
+                    <a href="../index.html" class="lang-btn">🇬🇧 EN</a>
+                    <a href="../ro/index.html" class="lang-btn">🇷🇴 RO</a>
+                    <a href="index.html" class="lang-btn active">🇮🇹 IT</a>
+                </div>
+
+                <a href="#vip-concierge" class="nav-cta"><i class="fa-solid fa-bolt"></i> Ordina Caccia VIP</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="container hero-content">
+            <div class="hero-badge">
+                <span class="pulse-dot"></span> IL RADAR DI ARBITRAGGIO AUTOMOBILISTICO EUROPEO
+            </div>
+            <h1>Troviamo l'Auto dei Tuoi Sogni.<br><span class="gradient-text">Dove Tutti gli Altri la Perdono.</span></h1>
+            <p class="hero-subtitle">
+                L'algoritmo AI che scova esemplari rari („Unicorni”) tramite codici precisi di fabbrica (<strong>VW6, 9M9, 1BK</strong>) e sfrutta le grandi opportunità di cambio nei <strong>paesi Scandinavi</strong>.
+            </p>
+
+            <!-- SEARCH BAR / AI PROMPT SEARCH -->
+            <div class="search-box">
+                <div class="search-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="ai-search-input" placeholder="Es: Porsche Macan Diesel con Webasto e doppi vetri sotto 35.000 €..." autocomplete="off">
+                    <button class="btn-hunt" onclick="triggerSearch()"><i class="fa-solid fa-crosshairs"></i> Caccia Ora</button>
+                </div>
+                <div class="search-pills">
+                    <span class="pill-label">Filtri Rapidi di Fabbrica:</span>
+                    <button class="pill active" onclick="applyFilter('9M9')"><i class="fa-solid fa-fire"></i> Webasto (9M9)</button>
+                    <button class="pill" onclick="applyFilter('VW6')"><i class="fa-solid fa-volume-xmark"></i> Doppi Vetri (VW6)</button>
+                    <button class="pill" onclick="applyFilter('1BK')"><i class="fa-solid fa-cloud"></i> Sospensioni Pneumatiche (1BK)</button>
+                    <button class="pill" onclick="applyFilter('SEK')"><i class="fa-solid fa-earth-europe"></i> Arbitraggio Svezia (-15%)</button>
+                </div>
+            </div>
+
+            <!-- TRUST STATS -->
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-num">18</span>
+                    <span class="stat-label">Mercati Europei Scansionati</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num">&lt; 30 sec</span>
+                    <span class="stat-label">Latenza Notifica Affare</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num">3.500€ - 8.000€</span>
+                    <span class="stat-label">Risparmio Medio / Esemplare</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num">100%</span>
+                    <span class="stat-label">Chilometri Ufficiali Certificati</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE UNICORNS SHOWCASE -->
+    <section id="unicorns" class="section-unicorns">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge-sub">ESEMPLARI REALI IDENTIFICATI</span>
+                <h2>Galleria degli Unicorni Europei</h2>
+                <p>Auto con allestimenti rari di fabbrica, documentate e verificate al millimetro sui registri statali nordici.</p>
+            </div>
+
+            <div class="cars-grid">
+                
+                <!-- CARD 1: MACAN S DIESEL -->
+                <div class="car-card">
+                    <div class="car-badge-discount">-14% SOTTO MERCATO</div>
+                    <div class="car-image-box">
+                        <img src="../macan.webp" alt="Porsche Macan S Diesel" class="car-img">
+                        <span class="car-country-tag">🇸🇪 Svezia (Stoccolma)</span>
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header-row">
+                            <h3>Porsche Macan S 3.0d V6</h3>
+                            <span class="car-year">2017</span>
+                        </div>
+                        <p class="car-specs-brief">258 CV • PDK • 107.500 km • Storico Car.info Certificato</p>
+                        
+                        <div class="car-tags">
+                            <span class="tag-opt"><i class="fa-solid fa-fire"></i> 9M9 Webasto con Telecomando</span>
+                            <span class="tag-opt"><i class="fa-solid fa-volume-xmark"></i> VW6 Doppi Vetri Acustici</span>
+                            <span class="tag-opt"><i class="fa-solid fa-circle-dot"></i> Cerchi 21" RS Turbo</span>
+                            <span class="tag-opt"><i class="fa-solid fa-shield-halved"></i> 0€ Superbollo IT (184kW / 250 CV)</span>
+                        </div>
+
+                        <div class="car-pricing">
+                            <div class="price-local">Prezzo Svezia: <strong>355.500 SEK</strong></div>
+                            <div class="price-eur">Prezzo Netto: <strong>~31.180 €</strong></div>
+                            <div class="price-compare">Prezzo Italia/Germania: <s>36.500 €</s> <span class="savings">Risparmio: ~5.320 €</span></div>
+                        </div>
+
+                        <a href="#vip-concierge" class="btn-card-action"><i class="fa-solid fa-crosshairs"></i> Blocca Questo Esemplare</a>
+                    </div>
+                </div>
+
+                <!-- CARD 2: AUDI A6 ALLROAD 50 TDI -->
+                <div class="car-card featured-card">
+                    <div class="car-badge-discount highlight">TOP ARBITRAGGIO SVEZIA (-17%)</div>
+                    <div class="car-image-box">
+                        <img src="../audi_a6.webp" alt="Audi A6 Allroad Quattro 50 TDI" class="car-img">
+                        <span class="car-country-tag">🇸🇪 Svezia (Göteborg)</span>
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header-row">
+                            <h3>Audi A6 Allroad 50 TDI Quattro</h3>
+                            <span class="car-year">2020</span>
+                        </div>
+                        <p class="car-specs-brief">3.0L V6 TDI • 286 CV • 620 Nm • 89.000 km • Cronologia Digitale Audi</p>
+                        
+                        <div class="car-tags">
+                            <span class="tag-opt"><i class="fa-solid fa-fire"></i> 9M9 Webasto Telecomando + App</span>
+                            <span class="tag-opt"><i class="fa-solid fa-volume-xmark"></i> VW0 Doppi Vetri Termoacustici</span>
+                            <span class="tag-opt"><i class="fa-solid fa-cloud"></i> 1BY Sospensioni Pneumatiche Allroad</span>
+                            <span class="tag-opt"><i class="fa-solid fa-eye"></i> Proiettori HD Matrix LED</span>
+                        </div>
+
+                        <div class="car-pricing">
+                            <div class="price-local">Prezzo Svezia: <strong>365.000 SEK</strong></div>
+                            <div class="price-eur">Prezzo Netto: <strong>~31.900 €</strong></div>
+                            <div class="price-compare">Media Mercato Italia: <s>38.500 €</s> <span class="savings">Risparmio: ~6.600 €</span></div>
+                        </div>
+
+                        <a href="#vip-concierge" class="btn-card-action"><i class="fa-solid fa-crosshairs"></i> Blocca Questo Esemplare</a>
+                    </div>
+                </div>
+
+                <!-- CARD 3: BMW M3 TOURING -->
+                <div class="car-card">
+                    <div class="car-badge-discount">-12% ARBITRAGGIO</div>
+                    <div class="car-image-box">
+                        <img src="../bmw_m3.webp" alt="BMW M3 Touring" class="car-img">
+                        <span class="car-country-tag">🇩🇪 Germania (Monaco)</span>
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header-row">
+                            <h3>BMW M3 Competition Touring</h3>
+                            <span class="car-year">2023</span>
+                        </div>
+                        <p class="car-specs-brief">510 CV • M xDrive • 38.000 km • Manutenzione Ufficiale BMW</p>
+                        
+                        <div class="car-tags">
+                            <span class="tag-opt"><i class="fa-solid fa-couch"></i> Sedili M Carbon a Guscio</span>
+                            <span class="tag-opt"><i class="fa-solid fa-eye"></i> Fari BMW Laser</span>
+                            <span class="tag-opt"><i class="fa-solid fa-circle-notch"></i> Freni M Carboceramici</span>
+                        </div>
+
+                        <div class="car-pricing">
+                            <div class="price-local">Prezzo Esposto: <strong>89.900 €</strong></div>
+                            <div class="price-eur">Prezzo Negoziato: <strong>84.500 €</strong></div>
+                            <div class="price-compare">Media Mercato: <s>93.000 €</s> <span class="savings">Risparmio: ~8.500 €</span></div>
+                        </div>
+
+                        <a href="#vip-concierge" class="btn-card-action"><i class="fa-solid fa-crosshairs"></i> Blocca Questo Esemplare</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ARBITRAGE COMPARISON SECTION -->
+    <section id="arbitrage" class="section-arbitrage">
+        <div class="container">
+            <div class="arbitrage-box">
+                <div class="arbitrage-text">
+                    <span class="badge-sub">IL SEGRETO SCANDINAVO</span>
+                    <h2>Perché le Auto dalla Svezia Sono Puro Oro:</h2>
+                    <ul class="benefit-list">
+                        <li><i class="fa-solid fa-check-circle"></i> <strong>Arbitraggio Valutario (SEK ➔ EUR):</strong> Il cambio favorevole della Corona Svedese offre uno sconto reale del 10%–15% acquistando in Euro.</li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong>Dotazioni Invernali al Top:</strong> Riscaldamento autonomo Webasto (`9M9`), volante riscaldato e doppi vetri isolanti (`VW6`) sono dotazioni di serie al Nord, non costosi optional a parte.</li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong>Registri Statali Pubblici al 100%:</strong> La legge svedese registra ufficialmente il chilometraggio a ogni revisione periodica. Rischio di manomissione pari a zero.</li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong>Importazione UE Immediata:</strong> La Svezia è un paese membro dell'Unione Europea. Zero dazi doganali per l'immatricolazione in Italia!</li>
+                    </ul>
+                </div>
+                <div class="arbitrage-calc">
+                    <div class="calc-card">
+                        <h3><i class="fa-solid fa-calculator"></i> Calcolatore Rapido di Arbitraggio</h3>
+                        <div class="calc-group">
+                            <label>Prezzo Auto in Svezia (SEK):</label>
+                            <input type="number" id="calc-sek" value="350000" oninput="calculateSavings()">
+                        </div>
+                        <div class="calc-results">
+                            <div class="res-row"><span>Equivalente Netto in Euro:</span> <strong id="calc-eur">30.700 €</strong></div>
+                            <div class="res-row"><span>Prezzo Medio Mercato Locale:</span> <strong>36.000 €</strong></div>
+                            <div class="res-row highlight"><span>Risparmio Netto Stimato:</span> <strong id="calc-diff">+5.300 €</strong></div>
+                        </div>
+                        <p class="calc-note">*Calcolato al tasso di cambio ufficiale BCE in tempo reale.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIP CONCIERGE ORDER FORM -->
+    <section id="vip-concierge" class="section-form">
+        <div class="container">
+            <div class="form-wrapper">
+                <div class="form-header">
+                    <span class="badge-sub">SERVIZIO ESCLUSIVO VIP</span>
+                    <h2>Ordina la Caccia della Tua Auto</h2>
+                    <p>Inserisci i tuoi criteri precisi. Attiviamo i radar in Svezia e in tutta Europa, ti presentiamo le 3 migliori opzioni verificate e gestiamo perizia tecnica, contrattazione e trasporto diretto a casa tua.</p>
+                </div>
+
+                <form id="order-form" onsubmit="submitLead(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-car"></i> Marca e Modello Desiderato:</label>
+                            <input type="text" id="lead-model" placeholder="Es: Porsche Macan S / Audi A6 Allroad / VW Touareg" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-euro-sign"></i> Budget Massimo Disponibile (€):</label>
+                            <input type="number" id="lead-budget" placeholder="Es: 35000" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label><i class="fa-solid fa-list-check"></i> Dotazioni Irrinunciabili (Seleziona cosa richiedi):</label>
+                            <div class="checkbox-row">
+                                <label><input type="checkbox" value="Webasto" checked> 🔥 Webasto Telecomando (9M9)</label>
+                                <label><input type="checkbox" value="Doppi Vetri" checked> 🔇 Doppi Vetri Acustici (VW6)</label>
+                                <label><input type="checkbox" value="Sospensioni Aria" checked> ☁️ Sospensioni Pneumatiche (1BK/1BY)</label>
+                                <label><input type="checkbox" value="Tetto"> ☀️ Tetto Panoramico (3FU)</label>
+                                <label><input type="checkbox" value="Ventilazione"> ❄️ Sedili Ventilati (4D3)</label>
+                                <label><input type="checkbox" value="Impianto Audio"> 🎵 Impianto BOSE / Burmester</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-user"></i> Il Tuo Nome:</label>
+                            <input type="text" id="lead-name" placeholder="Es: Marco Rossi" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fa-brands fa-whatsapp"></i> Numero WhatsApp / Telefono:</label>
+                            <input type="tel" id="lead-phone" placeholder="Es: +39 320 948 1876" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label><i class="fa-solid fa-envelope"></i> Indirizzo Email:</label>
+                            <input type="email" id="lead-email" placeholder="Es: marco.rossi@email.it" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit-hunt">
+                        <i class="fa-solid fa-crosshairs"></i> Avvia la Caccia per Me
+                    </button>
+                    <p class="form-footer-note"><i class="fa-solid fa-lock"></i> I tuoi dati sono strettamente confidenziali. Nessun intermediario inutile, solo perizie certificate.</p>
+                </form>
+
+                <!-- SUCCESS MESSAGE BANNER -->
+                <div id="success-banner" class="success-banner hidden">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <h3>Richiesta Ricevuta con Successo!</h3>
+                    <p>I radar continentali di DreamCarHunt™ sono stati attivati. Ti contatteremo a breve su WhatsApp/Email con le prime 3 migliori opportunità europee.</p>
+                    <div class="success-actions">
+                        <a id="lead-wa-btn" href="#" target="_blank" class="btn-wa-confirm">
+                            <i class="fa-brands fa-whatsapp"></i> Invia Subito i Dettagli su WhatsApp (+39 320 948 1876)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-col">
+                <div class="logo">
+                    <span class="logo-icon"><i class="fa-solid fa-crosshairs"></i></span>
+                    <span class="logo-text">DREAMCAR<strong>HUNT</strong></span>
+                </div>
+                <p>The Pan-European AI Automotive Arbitrage Platform. Troviamo le auto che tutti gli altri perdono.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Ecosistema VasileDev Group</h4>
+                <p>Titolare: Vasile Bratu</p>
+                <p>P.IVA: <code>IT04226190041</code></p>
+                <p>Sede: Garessio (CN), Italia & Odobești, Romania</p>
+            </div>
+            <div class="footer-col">
+                <h4>Rete Ufficiale</h4>
+                <p>🏛️ <a href="https://isbrokersafe.com" target="_blank">IsBrokerSafe.com</a></p>
+                <p>🛡️ <a href="https://verifydating.net" target="_blank">VerifyDating.net</a></p>
+                <p>👑 <a href="https://vasiledev.com" target="_blank">VasileDev.com</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 DreamCarHunt™ by VasileDev Group. Tutti i diritti riservati. Rete globale Cloudflare Edge ad altissima velocità.</p>
+        </div>
+    </footer>
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="https://wa.me/393209481876?text=Ciao%20Vasile!%20Vorrei%20trovare%20un%20auto%20rara%20tramite%20DreamCarHunt." target="_blank" class="floating-wa" title="Parla direttamente con Vasile su WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="floating-wa-pulse"></span>
+    </a>
+
+    <script src="../app.js"></script>
+</body>
+</html>

@@ -1,16 +1,22 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DreamCarHunt™ | The European AI Car Hunting Engine</title>
-    <meta name="description" content="Vânează mașini de elită și inorogi de fabrică în toată Europa. Căutare chirurgicală după coduri PR (VW6, 9M9, 1BK) și arbitraj valutar Suedia - Germania.">
+    <meta name="description" content="Hunt rare factory unicorns across Europe. Surgical search by PR option codes (VW6, 9M9, 1BK) and currency arbitrage between Sweden and Germany.">
     
     <!-- Open Graph / Social -->
-    <meta property="og:title" content="DreamCarHunt™ — AI European Car Hunter">
-    <meta property="og:description" content="Găsim mașinile pe care toți ceilalți le ratează. Arbitraj valutar din țările nordice și inspecție chirurgicală pe coduri de fabrică.">
+    <meta property="og:title" content="DreamCarHunt™ — European AI Car Hunter">
+    <meta property="og:description" content="Finding the cars everyone else misses. Scandinavian currency arbitrage and surgical factory PR code verification.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dreamcarhunt.com">
+    
+    <!-- Hreflang Tags for International SEO -->
+    <link rel="alternate" hreflang="en" href="https://dreamcarhunt.com/" />
+    <link rel="alternate" hreflang="ro" href="https://dreamcarhunt.com/ro/" />
+    <link rel="alternate" hreflang="it" href="https://dreamcarhunt.com/it/" />
+    <link rel="alternate" hreflang="x-default" href="https://dreamcarhunt.com/" />
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -42,29 +48,36 @@
       }
     }
     </script>
-
 </head>
 <body>
 
     <!-- TOP ANNOUNCEMENT BAR -->
     <div class="top-bar">
-        <span>⚡ <strong>RADAR NORDIC ACTIV:</strong> Scanăm în timp real piețele din Suedia, Germania, Italia și Franța. Curs valutar SEK/EUR actualizat live.</span>
+        <span>⚡ <strong>NORDIC RADAR ACTIVE:</strong> Real-time market scanning across Sweden, Germany, Italy & France. Live SEK/EUR currency arbitrage.</span>
     </div>
 
     <!-- NAVBAR -->
     <header class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">
+            <a href="/" class="logo">
                 <span class="logo-icon"><i class="fa-solid fa-crosshairs"></i></span>
                 <span class="logo-text">DREAMCAR<strong>HUNT</strong></span>
                 <span class="logo-tag">AI 2.0</span>
             </a>
 
             <nav class="nav-links">
-                <a href="#how-it-works">Cum Funcționează</a>
-                <a href="#unicorns">Inorogi de Fabrică</a>
-                <a href="#arbitrage">Arbitraj Suedia</a>
-                <a href="#vip-concierge" class="nav-cta"><i class="fa-solid fa-bolt"></i> Comandă Vânătoare VIP</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#unicorns">Factory Unicorns</a>
+                <a href="#arbitrage">Swedish Arbitrage</a>
+                
+                <!-- Language Switcher -->
+                <div class="lang-switcher">
+                    <a href="index.html" class="lang-btn active">🇬🇧 EN</a>
+                    <a href="ro/index.html" class="lang-btn">🇷🇴 RO</a>
+                    <a href="it/index.html" class="lang-btn">🇮🇹 IT</a>
+                </div>
+
+                <a href="#vip-concierge" class="nav-cta"><i class="fa-solid fa-bolt"></i> VIP Car Hunt</a>
             </nav>
         </div>
     </header>
@@ -76,24 +89,24 @@
             <div class="hero-badge">
                 <span class="pulse-dot"></span> THE EUROPEAN AUTOMOTIVE ARBITRAGE RADAR
             </div>
-            <h1>Găsim Mașina Visurilor Tale.<br><span class="gradient-text">Acolo Unde Toți Ceilalți o Ratează.</span></h1>
+            <h1>Find Your Dream Car.<br><span class="gradient-text">Where Everyone Else Misses It.</span></h1>
             <p class="hero-subtitle">
-                Algoritmul care vânează exemplare rare („Inorogi”) pe coduri exacte de fabrică (<strong>VW6, 9M9, 1BK</strong>) și valorifică diferențele masive de curs valutar din <strong>țările Scandinave</strong>.
+                The AI engine hunting rare factory gems („Unicorns”) by exact PR option codes (<strong>VW6, 9M9, 1BK</strong>) and unlocking massive currency arbitrage discounts from <strong>Scandinavian markets</strong>.
             </p>
 
             <!-- SEARCH BAR / AI PROMPT SEARCH -->
             <div class="search-box">
                 <div class="search-input-wrapper">
                     <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                    <input type="text" id="ai-search-input" placeholder="Ex: Porsche Macan Diesel cu Webasto și geam dublu sub 35.000 €..." autocomplete="off">
-                    <button class="btn-hunt" onclick="triggerSearch()"><i class="fa-solid fa-crosshairs"></i> Vânează Acum</button>
+                    <input type="text" id="ai-search-input" placeholder="E.g., Porsche Macan Diesel with Webasto and double glass under €35,000..." autocomplete="off">
+                    <button class="btn-hunt" onclick="triggerSearch()"><i class="fa-solid fa-crosshairs"></i> Hunt Now</button>
                 </div>
                 <div class="search-pills">
-                    <span class="pill-label">Filtre Rapide de Fabrică:</span>
+                    <span class="pill-label">Fast Factory Filters:</span>
                     <button class="pill active" onclick="applyFilter('9M9')"><i class="fa-solid fa-fire"></i> Webasto (9M9)</button>
-                    <button class="pill" onclick="applyFilter('VW6')"><i class="fa-solid fa-volume-xmark"></i> Geam Dublu (VW6)</button>
-                    <button class="pill" onclick="applyFilter('1BK')"><i class="fa-solid fa-cloud"></i> Perne Aer (1BK)</button>
-                    <button class="pill" onclick="applyFilter('SEK')"><i class="fa-solid fa-earth-europe"></i> Arbitraj Suedia (-15%)</button>
+                    <button class="pill" onclick="applyFilter('VW6')"><i class="fa-solid fa-volume-xmark"></i> Double Glass (VW6)</button>
+                    <button class="pill" onclick="applyFilter('1BK')"><i class="fa-solid fa-cloud"></i> Air Suspension (1BK)</button>
+                    <button class="pill" onclick="applyFilter('SEK')"><i class="fa-solid fa-earth-europe"></i> Sweden Arbitrage (-15%)</button>
                 </div>
             </div>
 
@@ -101,22 +114,22 @@
             <div class="hero-stats">
                 <div class="stat-item">
                     <span class="stat-num">18</span>
-                    <span class="stat-label">Piețe Europene Scanate</span>
+                    <span class="stat-label">European Markets Scanned</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat-item">
                     <span class="stat-num">&lt; 30 sec</span>
-                    <span class="stat-label">Latență Alertare Chilipir</span>
+                    <span class="stat-label">Deal Alert Latency</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat-item">
-                    <span class="stat-num">3.500€ - 8.000€</span>
-                    <span class="stat-label">Economie Medie / Exemplar</span>
+                    <span class="stat-num">€3,500 - €8,000</span>
+                    <span class="stat-label">Average Savings / Vehicle</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat-item">
                     <span class="stat-num">100%</span>
-                    <span class="stat-label">Istoric Oficial Fără Daune</span>
+                    <span class="stat-label">Official Clean Title Verified</span>
                 </div>
             </div>
         </div>
@@ -126,102 +139,102 @@
     <section id="unicorns" class="section-unicorns">
         <div class="container">
             <div class="section-header">
-                <span class="badge-sub">EXEMPLARE REALE IDENTIFICATE</span>
-                <h2>Galeria Inorogilor Europeni Vânați</h2>
-                <p>Mașini cu specificații rare de fabrică, documentate și verificate la milimetru pe registrele de stat nordice.</p>
+                <span class="badge-sub">VERIFIED LIVE MATCHES</span>
+                <h2>European Factory Unicorn Gallery</h2>
+                <p>Vehicles with ultra-rare factory specifications, documented and verified down to the millimeter on official Nordic registries.</p>
             </div>
 
             <div class="cars-grid">
                 
                 <!-- CARD 1: MACAN S DIESEL -->
                 <div class="car-card">
-                    <div class="car-badge-discount">-14% SUB PIAȚĂ</div>
+                    <div class="car-badge-discount">-14% BELOW MARKET</div>
                     <div class="car-image-box">
-                        <img src="macan.webp" alt="Porsche Macan S Diesel" class="car-img">
-                        <span class="car-country-tag">🇸🇪 Suedia (Stockholm)</span>
+                        <img src="/macan.webp" alt="Porsche Macan S Diesel" class="car-img">
+                        <span class="car-country-tag">🇸🇪 Sweden (Stockholm)</span>
                     </div>
                     <div class="car-info">
                         <div class="car-header-row">
                             <h3>Porsche Macan S 3.0d V6</h3>
                             <span class="car-year">2017</span>
                         </div>
-                        <p class="car-specs-brief">258 CP • PDK • 107.500 km • Istoric Car.info Verificat</p>
+                        <p class="car-specs-brief">258 HP • PDK • 107,500 km • Verified Car.info History</p>
                         
                         <div class="car-tags">
-                            <span class="tag-opt"><i class="fa-solid fa-fire"></i> 9M9 Webasto Telecomandă</span>
-                            <span class="tag-opt"><i class="fa-solid fa-volume-xmark"></i> VW6 Geam Dublu</span>
-                            <span class="tag-opt"><i class="fa-solid fa-circle-dot"></i> Jante 21" Turbo</span>
+                            <span class="tag-opt"><i class="fa-solid fa-fire"></i> 9M9 Webasto Remote</span>
+                            <span class="tag-opt"><i class="fa-solid fa-volume-xmark"></i> VW6 Double Glass</span>
+                            <span class="tag-opt"><i class="fa-solid fa-circle-dot"></i> 21" RS Turbo Wheels</span>
                             <span class="tag-opt"><i class="fa-solid fa-shield-halved"></i> 0€ Superbollo IT (184kW)</span>
                         </div>
 
                         <div class="car-pricing">
-                            <div class="price-local">Preț Suedia: <strong>355.500 SEK</strong></div>
-                            <div class="price-eur">Preț Net: <strong>~31.180 €</strong></div>
-                            <div class="price-compare">Preț Germania/Italia: <s>36.500 €</s> <span class="savings">Economie: ~5.320 €</span></div>
+                            <div class="price-local">Sweden Price: <strong>355,500 SEK</strong></div>
+                            <div class="price-eur">Net Price: <strong>~€31,180</strong></div>
+                            <div class="price-compare">Germany/Italy Market: <s>€36,500</s> <span class="savings">Save: ~€5,320</span></div>
                         </div>
 
-                        <a href="#vip-concierge" class="btn-card-action"><i class="fa-solid fa-crosshairs"></i> Vreau Această Mașină</a>
+                        <a href="#vip-concierge" class="btn-card-action"><i class="fa-solid fa-crosshairs"></i> Hunt This Vehicle</a>
                     </div>
                 </div>
 
                 <!-- CARD 2: AUDI A6 ALLROAD 50 TDI -->
                 <div class="car-card featured-card">
-                    <div class="car-badge-discount highlight">TOP ARBITRAJ SUEDIA (-17%)</div>
+                    <div class="car-badge-discount highlight">TOP SWEDISH ARBITRAGE (-17%)</div>
                     <div class="car-image-box">
-                        <img src="audi_a6.webp" alt="Audi A6 Allroad Quattro 50 TDI" class="car-img">
-                        <span class="car-country-tag">🇸🇪 Suedia (Göteborg)</span>
+                        <img src="/audi_a6.webp" alt="Audi A6 Allroad Quattro 50 TDI" class="car-img">
+                        <span class="car-country-tag">🇸🇪 Sweden (Gothenburg)</span>
                     </div>
                     <div class="car-info">
                         <div class="car-header-row">
                             <h3>Audi A6 Allroad 50 TDI Quattro</h3>
                             <span class="car-year">2020</span>
                         </div>
-                        <p class="car-specs-brief">3.0L V6 TDI • 286 CP • 620 Nm • 89.000 km • Istoric Digital Audi</p>
+                        <p class="car-specs-brief">3.0L V6 TDI • 286 HP • 620 Nm • 89,000 km • Digital Audi History</p>
                         
                         <div class="car-tags">
-                            <span class="tag-opt"><i class="fa-solid fa-fire"></i> 9M9 Webasto Telecomandă + App</span>
-                            <span class="tag-opt"><i class="fa-solid fa-volume-xmark"></i> VW0 Geam Dublu Acustic</span>
-                            <span class="tag-opt"><i class="fa-solid fa-cloud"></i> 1BY Perne Aer Adaptiv Allroad</span>
-                            <span class="tag-opt"><i class="fa-solid fa-eye"></i> Faruri HD Matrix LED</span>
+                            <span class="tag-opt"><i class="fa-solid fa-fire"></i> 9M9 Webasto Remote + App</span>
+                            <span class="tag-opt"><i class="fa-solid fa-volume-xmark"></i> VW0 Acoustic Double Glass</span>
+                            <span class="tag-opt"><i class="fa-solid fa-cloud"></i> 1BY Allroad Air Suspension</span>
+                            <span class="tag-opt"><i class="fa-solid fa-eye"></i> HD Matrix LED Lights</span>
                         </div>
 
                         <div class="car-pricing">
-                            <div class="price-local">Preț Suedia: <strong>365.000 SEK</strong></div>
-                            <div class="price-eur">Preț Net: <strong>~31.900 €</strong></div>
-                            <div class="price-compare">Preț Germania/România: <s>38.500 €</s> <span class="savings">Economie: ~6.600 €</span></div>
+                            <div class="price-local">Sweden Price: <strong>365,000 SEK</strong></div>
+                            <div class="price-eur">Net Price: <strong>~€31,900</strong></div>
+                            <div class="price-compare">Germany/Italy Market: <s>€38,500</s> <span class="savings">Save: ~€6,600</span></div>
                         </div>
 
-                        <a href="#vip-concierge" class="btn-card-action"><i class="fa-solid fa-crosshairs"></i> Vreau Această Mașină</a>
+                        <a href="#vip-concierge" class="btn-card-action"><i class="fa-solid fa-crosshairs"></i> Hunt This Vehicle</a>
                     </div>
                 </div>
 
                 <!-- CARD 3: BMW M3 TOURING -->
                 <div class="car-card">
-                    <div class="car-badge-discount">-12% ARBITRAJ</div>
+                    <div class="car-badge-discount">-12% ARBITRAGE</div>
                     <div class="car-image-box">
-                        <img src="bmw_m3.webp" alt="BMW M3 Touring" class="car-img">
-                        <span class="car-country-tag">🇩🇪 Germania (München)</span>
+                        <img src="/bmw_m3.webp" alt="BMW M3 Touring" class="car-img">
+                        <span class="car-country-tag">🇩🇪 Germany (Munich)</span>
                     </div>
                     <div class="car-info">
                         <div class="car-header-row">
                             <h3>BMW M3 Competition Touring</h3>
                             <span class="car-year">2023</span>
                         </div>
-                        <p class="car-specs-brief">510 CP • M xDrive • 38.000 km • Istoric BMW Service</p>
+                        <p class="car-specs-brief">510 HP • M xDrive • 38,000 km • BMW Service History</p>
                         
                         <div class="car-tags">
-                            <span class="tag-opt"><i class="fa-solid fa-couch"></i> Scaune M Carbon Bucket</span>
-                            <span class="tag-opt"><i class="fa-solid fa-eye"></i> Faruri BMW Laser</span>
-                            <span class="tag-opt"><i class="fa-solid fa-circle-notch"></i> Frâne M Carbon Ceramic</span>
+                            <span class="tag-opt"><i class="fa-solid fa-couch"></i> M Carbon Bucket Seats</span>
+                            <span class="tag-opt"><i class="fa-solid fa-eye"></i> BMW Laserlights</span>
+                            <span class="tag-opt"><i class="fa-solid fa-circle-notch"></i> M Carbon Ceramic Brakes</span>
                         </div>
 
                         <div class="car-pricing">
-                            <div class="price-local">Preț Listat: <strong>89.900 €</strong></div>
-                            <div class="price-eur">Preț Negociat: <strong>84.500 €</strong></div>
-                            <div class="price-compare">Media Pieței: <s>93.000 €</s> <span class="savings">Economie: ~8.500 €</span></div>
+                            <div class="price-local">List Price: <strong>€89,900</strong></div>
+                            <div class="price-eur">Negotiated: <strong>€84,500</strong></div>
+                            <div class="price-compare">Average Market: <s>€93,000</s> <span class="savings">Save: ~€8,500</span></div>
                         </div>
 
-                        <a href="#vip-concierge" class="btn-card-action"><i class="fa-solid fa-crosshairs"></i> Vreau Această Mașină</a>
+                        <a href="#vip-concierge" class="btn-card-action"><i class="fa-solid fa-crosshairs"></i> Hunt This Vehicle</a>
                     </div>
                 </div>
 
@@ -234,28 +247,28 @@
         <div class="container">
             <div class="arbitrage-box">
                 <div class="arbitrage-text">
-                    <span class="badge-sub">SECRETUL SCANDINAV</span>
-                    <h2>De Ce Mașinile Din Suedia Sunt Aur Curat:</h2>
+                    <span class="badge-sub">THE SCANDINAVIAN SECRET</span>
+                    <h2>Why Scandinavian Cars Are Pure Gold:</h2>
                     <ul class="benefit-list">
-                        <li><i class="fa-solid fa-check-circle"></i> <strong>Arbitraj Valutar (SEK ➔ EUR):</strong> Slăbirea Coroanei Suedeze îți oferă un discount automat de 10%–15% la plata în Euro.</li>
-                        <li><i class="fa-solid fa-check-circle"></i> <strong>Dotări Supreme de Iarnă:</strong> Webasto din telecomandă (`9M9`), volan încălzit și geamuri duble fono-termo (`VW6`) sunt dotări standard pentru suedezi, nu opțiuni de lux scumpe.</li>
-                        <li><i class="fa-solid fa-check-circle"></i> <strong>Registre de Stat 100% Transparente:</strong> Statul suedez publică prin lege kilometrii la fiecare ITP. Zero riscuri de țeapă sau kilometri măsluiți.</li>
-                        <li><i class="fa-solid fa-check-circle"></i> <strong>Import Simplu în UE:</strong> Suedia este stat membru UE. Zero taxe vamale la intrarea în Italia, Germania sau România!</li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong>Currency Arbitrage (SEK ➔ EUR):</strong> The softened Swedish Krona delivers an automatic 10%–15% purchasing power discount when paying in Euros.</li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong>Supreme Winter Specifications:</strong> Factory Webasto auxiliary heaters (`9M9`), heated steering wheels, and acoustic double glass (`VW6`) are standard Swedish necessities, not overpriced options.</li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong>100% Transparent State Registries:</strong> Swedish law strictly records mileage at every technical inspection (Car.info / Transportstyrelsen). Zero odometer rollbacks.</li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong>Frictionless EU Import:</strong> Sweden is a full EU member state. Zero customs duties or tariffs entering Germany, Italy, France, or Romania!</li>
                     </ul>
                 </div>
                 <div class="arbitrage-calc">
                     <div class="calc-card">
-                        <h3><i class="fa-solid fa-calculator"></i> Calculator Rapid de Arbitraj</h3>
+                        <h3><i class="fa-solid fa-calculator"></i> Quick Arbitrage Calculator</h3>
                         <div class="calc-group">
-                            <label>Preț Mașină în Suedia (SEK):</label>
+                            <label>Car Price in Sweden (SEK):</label>
                             <input type="number" id="calc-sek" value="350000" oninput="calculateSavings()">
                         </div>
                         <div class="calc-results">
-                            <div class="res-row"><span>Echivalent Net Euro:</span> <strong id="calc-eur">30.700 €</strong></div>
-                            <div class="res-row"><span>Preț Mediu Piață Locală:</span> <strong>36.000 €</strong></div>
-                            <div class="res-row highlight"><span>Economie Estimată Netă:</span> <strong id="calc-diff">+5.300 €</strong></div>
+                            <div class="res-row"><span>Net Euro Equivalent:</span> <strong id="calc-eur">€30,700</strong></div>
+                            <div class="res-row"><span>Average Local Market:</span> <strong>€36,000</strong></div>
+                            <div class="res-row highlight"><span>Estimated Net Savings:</span> <strong id="calc-diff">+€5,300</strong></div>
                         </div>
-                        <p class="calc-note">*Calcul efectuat la cursul de schimb oficial BCE.</p>
+                        <p class="calc-note">*Calculated using official ECB real-time exchange rates.</p>
                     </div>
                 </div>
             </div>
@@ -267,60 +280,60 @@
         <div class="container">
             <div class="form-wrapper">
                 <div class="form-header">
-                    <span class="badge-sub">SERVICIUL EXCLUSIVIST VIP</span>
-                    <h2>Comandă Vânătoarea Mașinii Tale</h2>
-                    <p>Lasă criteriile exacte. Noi activăm radarele în Suedia și Europa, îți prezentăm cele mai bune 3 opțiuni negociate și ne ocupăm de verificare completă, contract și transport direct la ușa ta.</p>
+                    <span class="badge-sub">EXCLUSIVE VIP CONCIERGE</span>
+                    <h2>Commission Your Personal Car Hunt</h2>
+                    <p>Enter your exact requirements. We activate our radars across Sweden and mainland Europe, deliver the top 3 negotiated matches, and handle end-to-end technical inspection, legal contracts, and door-to-door delivery.</p>
                 </div>
 
                 <form id="order-form" onsubmit="submitLead(event)">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label><i class="fa-solid fa-car"></i> Marca și Modelul Dorit:</label>
-                            <input type="text" id="lead-model" placeholder="Ex: Porsche Macan S / Audi A6 Allroad / VW Touareg" required>
+                            <label><i class="fa-solid fa-car"></i> Desired Make & Model:</label>
+                            <input type="text" id="lead-model" placeholder="E.g., Porsche Macan S / Audi A6 Allroad / VW Touareg" required>
                         </div>
                         <div class="form-group">
-                            <label><i class="fa-solid fa-euro-sign"></i> Buget Maxim Disponibil (€):</label>
-                            <input type="number" id="lead-budget" placeholder="Ex: 35000" required>
+                            <label><i class="fa-solid fa-euro-sign"></i> Maximum Budget (€):</label>
+                            <input type="number" id="lead-budget" placeholder="E.g., 35000" required>
                         </div>
                         <div class="form-group full-width">
-                            <label><i class="fa-solid fa-list-check"></i> Opțiuni Obligatorii (Bifează ce contează pentru tine):</label>
+                            <label><i class="fa-solid fa-list-check"></i> Mandatory Options (Select what matters to you):</label>
                             <div class="checkbox-row">
-                                <label><input type="checkbox" value="Webasto" checked> 🔥 Webasto Telecomandă (9M9)</label>
-                                <label><input type="checkbox" value="Geam Dublu" checked> 🔇 Geam Dublu Fonoizolant (VW6)</label>
-                                <label><input type="checkbox" value="Perne Aer" checked> ☁️ Suspensie Pneumatică (1BK)</label>
-                                <label><input type="checkbox" value="Trapa"> ☀️ Trapă Panoramică (3FU)</label>
-                                <label><input type="checkbox" value="Ventilatie"> ❄️ Scaune Ventilate (4D3)</label>
-                                <label><input type="checkbox" value="Bose"> 🎵 Audio BOSE / Burmester</label>
+                                <label><input type="checkbox" value="Webasto" checked> 🔥 Factory Webasto (9M9)</label>
+                                <label><input type="checkbox" value="Double Glass" checked> 🔇 Acoustic Double Glass (VW6)</label>
+                                <label><input type="checkbox" value="Air Suspension" checked> ☁️ Air Suspension (1BK/1BY)</label>
+                                <label><input type="checkbox" value="Panoramic Sunroof"> ☀️ Panoramic Roof (3FU)</label>
+                                <label><input type="checkbox" value="Ventilated Seats"> ❄️ Ventilated Seats (4D3)</label>
+                                <label><input type="checkbox" value="Premium Audio"> 🎵 BOSE / Burmester Audio</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label><i class="fa-solid fa-user"></i> Numele Tău:</label>
-                            <input type="text" id="lead-name" placeholder="Ex: Vasile Bratu" required>
+                            <label><i class="fa-solid fa-user"></i> Your Full Name:</label>
+                            <input type="text" id="lead-name" placeholder="E.g., Michael Vance" required>
                         </div>
                         <div class="form-group">
-                            <label><i class="fa-brands fa-whatsapp"></i> Număr WhatsApp / Telefon:</label>
-                            <input type="tel" id="lead-phone" placeholder="Ex: +39 320 948 1876" required>
+                            <label><i class="fa-brands fa-whatsapp"></i> WhatsApp / Phone Number:</label>
+                            <input type="tel" id="lead-phone" placeholder="E.g., +44 7911 123456 / +39 320 948 1876" required>
                         </div>
                         <div class="form-group full-width">
-                            <label><i class="fa-solid fa-envelope"></i> Adresă de Email:</label>
-                            <input type="email" id="lead-email" placeholder="Ex: amendamax@gmail.com" required>
+                            <label><i class="fa-solid fa-envelope"></i> Email Address:</label>
+                            <input type="email" id="lead-email" placeholder="E.g., client@example.com" required>
                         </div>
                     </div>
 
                     <button type="submit" class="btn-submit-hunt">
-                        <i class="fa-solid fa-crosshairs"></i> Lansează Vânătoarea Pentru Mine
+                        <i class="fa-solid fa-crosshairs"></i> Launch My Car Hunt
                     </button>
-                    <p class="form-footer-note"><i class="fa-solid fa-lock"></i> Datele tale sunt 100% confidențiale. Fără spam, doar exemplare verificate chirurgical.</p>
+                    <p class="form-footer-note"><i class="fa-solid fa-lock"></i> Your information is strictly confidential. No spam, only surgically verified vehicles.</p>
                 </form>
 
                 <!-- SUCCESS MESSAGE BANNER -->
                 <div id="success-banner" class="success-banner hidden">
                     <i class="fa-solid fa-circle-check"></i>
-                    <h3>Cererea Ta a Fost Înregistrată cu Succes!</h3>
-                    <p>Radarele DreamCarHunt™ au fost activate. Te vom contacta în cel mai scurt timp cu primele 3 opțiuni negociate din Europa.</p>
+                    <h3>Your Search Order Has Been Received!</h3>
+                    <p>The DreamCarHunt™ European radars are active. We will contact you shortly with the top 3 negotiated options across the continent.</p>
                     <div class="success-actions">
                         <a id="lead-wa-btn" href="#" target="_blank" class="btn-wa-confirm">
-                            <i class="fa-brands fa-whatsapp"></i> Trimite Instant Detaliile pe WhatsApp (+39 320 948 1876)
+                            <i class="fa-brands fa-whatsapp"></i> Send Instantly via WhatsApp (+39 320 948 1876)
                         </a>
                     </div>
                 </div>
@@ -336,33 +349,32 @@
                     <span class="logo-icon"><i class="fa-solid fa-crosshairs"></i></span>
                     <span class="logo-text">DREAMCAR<strong>HUNT</strong></span>
                 </div>
-                <p>The Pan-European AI Automotive Arbitrage Platform. Găsim mașinile pe care toți ceilalți le ratează.</p>
+                <p>The Pan-European AI Automotive Arbitrage Platform. Finding the cars everyone else misses.</p>
             </div>
             <div class="footer-col">
-                <h4>Ecosistemul VasileDev Group</h4>
-                <p>Proprietar: Vasile Bratu</p>
-                <p>P.IVA: <code>IT04226190041</code></p>
-                <p>Locație: Garessio (CN), Italia & Odobești, România</p>
+                <h4>VasileDev Group Ecosystem</h4>
+                <p>Proprietor: Vasile Bratu</p>
+                <p>VAT / P.IVA: <code>IT04226190041</code></p>
+                <p>Locations: Garessio (CN), Italy & Odobești, Romania</p>
             </div>
             <div class="footer-col">
-                <h4>Rețeaua Oficială</h4>
+                <h4>Official Network</h4>
                 <p>🏛️ <a href="https://isbrokersafe.com" target="_blank">IsBrokerSafe.com</a></p>
                 <p>🛡️ <a href="https://verifydating.net" target="_blank">VerifyDating.net</a></p>
                 <p>👑 <a href="https://vasiledev.com" target="_blank">VasileDev.com</a></p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 DreamCarHunt™ by VasileDev Group. Toate drepturile rezervate. Găzduit cu mândrie pe Cloudflare Edge Network.</p>
+            <p>&copy; 2026 DreamCarHunt™ by VasileDev Group. All rights reserved. Powered globally by Cloudflare Edge Network.</p>
         </div>
     </footer>
 
-    <script src="app.js"></script>
-
     <!-- FLOATING WHATSAPP BUTTON -->
-    <a href="https://wa.me/393209481876?text=Salut%20Vasile!%20Vreau%20s%C4%83%20g%C4%83sim%20o%20ma%C8%99in%C4%83%20rar%C4%83%20prin%20DreamCarHunt." target="_blank" class="floating-wa" title="Discută direct cu Vasile pe WhatsApp">
+    <a href="https://wa.me/393209481876?text=Hello%20Vasile!%20I%20am%20interested%20in%20hunting%20a%20car%20through%20DreamCarHunt." target="_blank" class="floating-wa" title="Chat directly with Vasile on WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
         <span class="floating-wa-pulse"></span>
     </a>
 
+    <script src="/app.js"></script>
 </body>
 </html>
