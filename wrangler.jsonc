@@ -1,7 +1,15 @@
 {
   "name": "dreamcarhunt",
+  "main": "src/worker.js",
   "compatibility_date": "2026-09-10",
   "assets": {
     "directory": "."
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "dreamcarhunt_db",
+      "database_name": "dreamcarhunt-db",
+      "database_id": "5d26222d-f4ca-470f-ba21-0700a90ce76f"
+    }
+  ]
 }

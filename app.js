@@ -73,18 +73,36 @@ function submitLead(e) {
         timestamp: new Date().toISOString()
     };
     
+    // Save to local storage as client-side backup
     let existingLeads = JSON.parse(localStorage.getItem('dreamcarhunt_leads') || '[]');
     existingLeads.push(leadData);
     localStorage.setItem('dreamcarhunt_leads', JSON.stringify(existingLeads));
 
+    // Send asynchronously to Cloudflare D1 SQLite Database at Edge
+    fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name,
+            phone,
+            email,
+            model,
+            budget,
+            options,
+            lang
+        })
+    }).then(res => res.json())
+      .then(data => console.log('Saved to Cloudflare D1:', data))
+      .catch(err => console.warn('D1 sync notice:', err));
+
     // Dynamic Multilingual WhatsApp Message
     let waMsgText = '';
     if (lang === 'ro') {
-        waMsgText = `Salut Vasile! Sunt ${name}. Am plasat o comandă de vânătoare pe DreamCarHunt™:\n\n🚗 Model: ${model}\n💰 Buget Maxim: ${budget} €\n🛠️ Dotări Obligatorii: ${options.join(', ') || 'Standard de top'}\n📞 Tel: ${phone}\n✉️ Email: ${email}`;
+        waMsgText = `Salut! Sunt ${name}. Am plasat o comandă de vânătoare pe DreamCarHunt™:\n\n🚗 Model: ${model}\n💰 Buget Maxim: ${budget} €\n🛠️ Dotări Obligatorii: ${options.join(', ') || 'Standard de top'}\n📞 Tel: ${phone}\n✉️ Email: ${email}`;
     } else if (lang === 'it') {
-        waMsgText = `Ciao Vasile! Sono ${name}. Ho inviato una richiesta di ricerca su DreamCarHunt™:\n\n🚗 Modello: ${model}\n💰 Budget Massimo: ${budget} €\n🛠️ Dotazioni: ${options.join(', ') || 'Top di gamma'}\n📞 Tel: ${phone}\n✉️ Email: ${email}`;
+        waMsgText = `Ciao! Sono ${name}. Ho inviato una richiesta di ricerca su DreamCarHunt™:\n\n🚗 Modello: ${model}\n💰 Budget Massimo: ${budget} €\n🛠️ Dotazioni: ${options.join(', ') || 'Top di gamma'}\n📞 Tel: ${phone}\n✉️ Email: ${email}`;
     } else {
-        waMsgText = `Hello Vasile! I am ${name}. I submitted a car hunt request on DreamCarHunt™:\n\n🚗 Model: ${model}\n💰 Max Budget: €${budget}\n🛠️ Mandatory Options: ${options.join(', ') || 'Top Spec'}\n📞 Phone: ${phone}\n✉️ Email: ${email}`;
+        waMsgText = `Hello! I am ${name}. I submitted a car hunt request on DreamCarHunt™:\n\n🚗 Model: ${model}\n💰 Max Budget: €${budget}\n🛠️ Mandatory Options: ${options.join(', ') || 'Top Spec'}\n📞 Phone: ${phone}\n✉️ Email: ${email}`;
     }
 
     const waBtn = document.getElementById('lead-wa-btn');
