@@ -13,3 +13,6 @@
 
 /car_bg.webp
   Cache-Control: public, max-age=604800, immutable
+
+/*.webp
+  Cache-Control: public, max-age=604800, immutable
