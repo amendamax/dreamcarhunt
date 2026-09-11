@@ -26,11 +26,33 @@ h1, h2, h3, h4, .logo-text, .stat-num {
     font-family: 'Outfit', sans-serif;
 }
 
+html {
+    background-color: #07090e;
+}
+
 body {
-    background-color: var(--bg-dark);
+    background-color: transparent !important;
+    background-image: none !important;
     color: var(--text-main);
     line-height: 1.6;
     overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: linear-gradient(rgba(7, 9, 14, 0.72), rgba(7, 9, 14, 0.85)), url('car_bg.webp') !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    pointer-events: none;
 }
 
 .container {

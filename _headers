@@ -10,3 +10,6 @@
 
 /app.js
   Cache-Control: public, max-age=86400
+
+/car_bg.webp
+  Cache-Control: public, max-age=604800, immutable
