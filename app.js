@@ -116,6 +116,22 @@ function submitLead(e) {
     console.log('Lead registered:', leadData);
 }
 
+function loadLiveStats() {
+    fetch('/api/stats')
+        .then(r => r.json())
+        .then(data => {
+            if (!data || !data.success) return;
+            const statSavings = document.getElementById('stat-savings');
+            if (statSavings && data.average_savings_eur) {
+                const lang = document.documentElement.lang || 'en';
+                const formatted = data.average_savings_eur.toLocaleString(lang === 'ro' ? 'ro-RO' : (lang === 'it' ? 'it-IT' : 'de-DE'));
+                statSavings.innerText = lang === 'en' ? `~€${formatted}` : `~${formatted} €`;
+            }
+        })
+        .catch(err => console.debug('Live stats notice:', err));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     calculateSavings();
+    loadLiveStats();
 });

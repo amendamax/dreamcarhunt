@@ -1,0 +1,9 @@
+.git
+.wrangler
+scrapers
+__pycache__
+*.sql
+*.py
+*.pyc
+*.md
+.gitignore
