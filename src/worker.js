@@ -22,7 +22,6 @@ export default {
     if (url.pathname.startsWith('/api/')) {
       try {
         const response = await handleApi(request, env, url);
-        // Attach CORS headers to API responses
         const newHeaders = new Headers(response.headers);
         Object.entries(corsHeaders).forEach(([k, v]) => newHeaders.set(k, v));
         return new Response(response.body, {
@@ -58,10 +57,8 @@ async function handleApi(request, env, url) {
       );
     }
 
-    const stmt = db.prepare(
-      INSERT INTO leads (full_name, phone, email, desired_model, max_budget_eur, mandatory_options_json, client_lang)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    );
+    const sql = 'INSERT INTO leads (full_name, phone, email, desired_model, max_budget_eur, mandatory_options_json, client_lang) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const stmt = db.prepare(sql);
 
     const result = await stmt.bind(
       name,
@@ -77,7 +74,7 @@ async function handleApi(request, env, url) {
       JSON.stringify({
         success: true,
         message: 'Lead registered successfully in Cloudflare D1.',
-        lead_id: result.meta?.last_row_id,
+        lead_id: result.meta ? result.meta.last_row_id : null,
       }),
       { status: 201, headers: { 'Content-Type': 'application/json' } }
     );
@@ -100,14 +97,14 @@ async function handleApi(request, env, url) {
     }
     if (model) {
       query += ' AND UPPER(model) LIKE UPPER(?)';
-      params.push(%%);
+      params.push('%' + model + '%');
     }
     if (maxBudget) {
       query += ' AND price_eur <= ?';
       params.push(parseInt(maxBudget));
     }
     if (prCode) {
-      query +=  AND id IN (SELECT car_id FROM car_pr_matches WHERE UPPER(pr_code) = UPPER(?));
+      query += ' AND id IN (SELECT car_id FROM car_pr_matches WHERE UPPER(pr_code) = UPPER(?))';
       params.push(prCode);
     }
 
@@ -140,9 +137,9 @@ async function handleApi(request, env, url) {
     return new Response(
       JSON.stringify({
         success: true,
-        total_scanned_cars: carsCount?.count || 14820,
-        average_savings_eur: Math.round(carsCount?.avg_savings || 4850),
-        registered_leads: leadsCount?.count || 0,
+        total_scanned_cars: (carsCount && carsCount.count) ? carsCount.count : 14820,
+        average_savings_eur: Math.round((carsCount && carsCount.avg_savings) ? carsCount.avg_savings : 4850),
+        registered_leads: (leadsCount && leadsCount.count) ? leadsCount.count : 0,
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
