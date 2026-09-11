@@ -900,12 +900,244 @@ body::before {
     color: #64748b;
 }
 
+/* ==========================================================================
+   MOBILE & TABLET RESPONSIVENESS OPTIMIZATIONS
+   ========================================================================== */
+@media (max-width: 880px) {
+    /* Hide the 3 internal text links on tablets/phones, but keep language switcher & CTA */
+    .nav-links a:not(.nav-cta):not(.lang-btn) {
+        display: none;
+    }
+    .nav-links {
+        gap: 12px;
+    }
+    .nav-cta {
+        padding: 7px 13px;
+        font-size: 0.8rem;
+    }
+}
+
 @media (max-width: 768px) {
-    .hero h1 { font-size: 2.2rem; }
-    .arbitrage-box { grid-template-columns: 1fr; }
-    .form-grid { grid-template-columns: 1fr; }
-    .footer-container { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
+    .container {
+        padding: 0 16px;
+    }
+    .top-bar {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+    .navbar {
+        padding: 0;
+    }
+    .nav-container {
+        padding: 10px 16px;
+    }
+    .logo-text {
+        font-size: 1.15rem;
+    }
+    .logo-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 0.95rem;
+    }
+    .logo-tag {
+        font-size: 0.55rem;
+        padding: 1px 4px;
+    }
+
+    /* Hero adjustments */
+    .hero {
+        padding: 45px 0 35px 0;
+    }
+    .hero-badge {
+        font-size: 0.68rem;
+        padding: 4px 12px;
+        margin-bottom: 16px;
+    }
+    .hero h1 {
+        font-size: 1.85rem;
+        line-height: 1.22;
+        margin-bottom: 14px;
+    }
+    .hero-subtitle {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 24px;
+        padding: 0 8px;
+    }
+
+    /* Search Box on mobile */
+    .search-box {
+        padding: 8px;
+        border-radius: 16px;
+        margin-bottom: 30px;
+    }
+    .search-input-wrapper {
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px;
+        background: #0b1120;
+        border-radius: 12px;
+    }
+    .search-icon {
+        display: none;
+    }
+    .search-input-wrapper input {
+        width: 100%;
+        text-align: center;
+        padding: 8px 4px;
+        font-size: 0.92rem;
+    }
+    .btn-hunt {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+        font-size: 0.92rem;
+    }
+
+    /* Horizontal scrollable pills for thumb-swiping */
+    .search-pills {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 8px 2px 4px 2px;
+        gap: 8px;
+        scrollbar-width: none;
+    }
+    .search-pills::-webkit-scrollbar {
+        display: none;
+    }
+    .pill-label {
+        display: none;
+    }
+    .pill {
+        flex-shrink: 0;
+        white-space: nowrap;
+        font-size: 0.75rem;
+        padding: 5px 11px;
+    }
+
+    /* Hero stats: clean 2x2 grid */
+    .hero-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 24px;
+    }
+    .stat-divider {
+        display: none;
+    }
+    .stat-item {
+        background: rgba(16, 22, 36, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 12px 8px;
+        border-radius: 10px;
+    }
+    .stat-num {
+        font-size: 1.35rem;
+    }
+    .stat-label {
+        font-size: 0.72rem;
+    }
+
+    /* Cars Grid */
+    .section-unicorns {
+        padding: 50px 0;
+    }
+    .section-header {
+        margin-bottom: 30px;
+    }
+    .section-header h2 {
+        font-size: 1.7rem;
+    }
+    .cars-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+    .car-info {
+        padding: 16px;
+    }
+    .car-header-row h3 {
+        font-size: 1.15rem;
+    }
+
+    /* Arbitrage */
+    .section-arbitrage {
+        padding: 50px 0;
+    }
+    .arbitrage-box {
+        grid-template-columns: 1fr;
+        padding: 20px 16px;
+        gap: 28px;
+    }
+    .arbitrage-text h2 {
+        font-size: 1.5rem;
+    }
+    .benefit-list li {
+        font-size: 0.88rem;
+    }
+
+    /* Form on mobile */
+    .section-form {
+        padding: 50px 0;
+    }
+    .form-wrapper {
+        padding: 24px 16px;
+        border-radius: 16px;
+    }
+    .form-header h2 {
+        font-size: 1.6rem;
+    }
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    /* Prevent iOS zoom on input tap */
+    .form-group input, .form-group select {
+        font-size: 16px !important;
+    }
+    .checkbox-row {
+        grid-template-columns: 1fr;
+        display: grid;
+        gap: 10px;
+    }
+    .btn-submit-hunt {
+        font-size: 0.95rem;
+        padding: 14px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Floating WhatsApp Button on mobile */
+    .floating-wa {
+        width: 54px;
+        height: 54px;
+        font-size: 27px;
+        bottom: 18px;
+        right: 18px;
+    }
+
+    /* Footer on mobile */
+    .footer {
+        padding: 40px 0 20px 0;
+    }
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-cta {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+    .lang-btn {
+        padding: 3px 6px;
+        font-size: 0.7rem;
+    }
+    .hero h1 {
+        font-size: 1.65rem;
+    }
 }
 
 /* SUCCESS BANNER WA BUTTON */
