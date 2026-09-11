@@ -58,6 +58,13 @@ function submitLead(e) {
     existingLeads.push(leadData);
     localStorage.setItem('dreamcarhunt_leads', JSON.stringify(existingLeads));
 
+    // Pregătire WhatsApp direct
+    const waMsg = encodeURIComponent(`Salut Vasile! Sunt ${name}. Am plasat o comandă de vânătoare pe DreamCarHunt™:\n\n🚗 Model: ${model}\n💰 Buget Maxim: ${budget} €\n🛠️ Dotări Obligatorii: ${options.join(', ') || 'Standard de top'}\n📞 Tel: ${phone}\n✉️ Email: ${email}`);
+    const waBtn = document.getElementById('lead-wa-btn');
+    if (waBtn) {
+        waBtn.href = `https://wa.me/393209481876?text=${waMsg}`;
+    }
+
     // Afișare banner succes
     document.getElementById('order-form').style.display = 'none';
     document.getElementById('success-banner').classList.remove('hidden');
