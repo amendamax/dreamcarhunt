@@ -18,6 +18,26 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
+    // Block common vulnerability scanners, probes, and malicious paths immediately at edge
+    const p = url.pathname.toLowerCase();
+    if (
+      p.endsWith('.php') ||
+      p.endsWith('.env') ||
+      p.includes('.env') ||
+      p.includes('wp-') ||
+      p.includes('pinfo') ||
+      p.includes('config') ||
+      p.includes('cgi-bin') ||
+      p.includes('actuator') ||
+      p.includes('xmlrpc') ||
+      p.includes('.git')
+    ) {
+      return new Response('404 Not Found', {
+        status: 404,
+        headers: { 'Content-Type': 'text/plain; charset=UTF-8' },
+      });
+    }
+
     // Route API requests
     if (url.pathname.startsWith('/api/')) {
       try {
@@ -37,10 +57,28 @@ export default {
       }
     }
 
-    // Serve static frontend assets (HTML, CSS, WebP, JS)
-    return env.ASSETS.fetch(request);
+    // Serve static frontend assets (HTML, CSS, WebP, JS) with graceful 404 fallback
+    try {
+      const assetResponse = await env.ASSETS.fetch(request);
+      if (assetResponse.status === 404) {
+        return notFoundResponse();
+      }
+      return assetResponse;
+    } catch (e) {
+      return notFoundResponse();
+    }
   },
 };
+
+function notFoundResponse() {
+  return new Response(
+    '<!DOCTYPE html><html lang="ro"><head><title>404 Not Found | DreamCarHunt</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body{background:#0b1320;color:#94a3b8;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;flex-direction:column;text-align:center;padding:20px}h1{color:#fff;font-size:32px;margin:0 0 10px}p{font-size:16px;margin:0 0 20px}a{color:#38bdf8;text-decoration:none;font-weight:600;padding:10px 20px;border:1px solid #38bdf8;border-radius:8px;transition:0.2s}a:hover{background:rgba(56,189,248,0.1)}</style></head><body><h1>404 &bull; Pagina nu a fost găsită</h1><p>Resursa căutată nu există pe DreamCarHunt.</p><a href="/">&larr; Înapoi la pagina principală</a></body></html>',
+    {
+      status: 404,
+      headers: { 'Content-Type': 'text/html; charset=UTF-8' },
+    }
+  );
+}
 
 async function handleApi(request, env, url) {
   const db = env.dreamcarhunt_db;
