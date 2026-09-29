@@ -1,0 +1,288 @@
+import json
+
+PR_OPTIONS = [
+  {
+    "slug": "webasto-heater-9m9",
+    "code": "9M9",
+    "title": {
+      "en": "Factory Webasto Auxiliary Heater (9M9)",
+      "ro": "Încălzire Auxiliară Webasto din Fabrică (9M9)",
+      "it": "Riscaldamento Autonomo Webasto di Fabbrica (9M9)"
+    },
+    "desc": {
+      "en": "Pre-heats engine and passenger cabin via remote control and smartphone app. Eliminates cold-start engine wear and frosty windows.",
+      "ro": "Preîncălzește motorul și habitaclul din telecomandă și aplicație. Elimină complet uzura pornirilor reci și dezgheață geamurile instant.",
+      "it": "Preriscalda motore e abitacolo tramite telecomando e app smartphone. Elimina l'usura dell'avviamento a freddo e sbrina all'istante."
+    }
+  },
+  {
+    "slug": "double-acoustic-glass-vw6",
+    "code": "VW6",
+    "title": {
+      "en": "Acoustic Double Glazed Soundproof Glass (VW6)",
+      "ro": "Geamuri Duble Atermice Izolate Fonic (VW6)",
+      "it": "Doppi Vetri Acustici Insonorizzati (VW6)"
+    },
+    "desc": {
+      "en": "Dual-pane laminated glass with acoustic PVB interlayer. Drops highway wind and tire decibels drastically while deflecting UV and solar heat.",
+      "ro": "Geamuri duble laminate cu folie PVB acustică. Reduce zgomotul de rulare și vânt pe autostradă și izolează termic habitaclul.",
+      "it": "Doppi vetri stratificati con pellicola PVB fonoassorbente. Riduce drasticamente i decibel del vento in autostrada e respinge il calore."
+    }
+  },
+  {
+    "slug": "air-suspension-1bk",
+    "code": "1BK / 1BY",
+    "title": {
+      "en": "Adaptive Air Suspension with Level Control (1BK)",
+      "ro": "Suspensie Pneumatică Adaptivă cu Perne de Aer (1BK/1BY)",
+      "it": "Sospensioni Pneumatiche Adattive Regolabili (1BK/1BY)"
+    },
+    "desc": {
+      "en": "Full 4-corner air suspension with PASM continuous electronic damping. Allows clearing steep terrain or dropping aerodynamically on highways.",
+      "ro": "Suspensie pe perne de aer cu reglaj activ pe înălțime. Permite înălțarea gărzii la sol pe macadam sau coborârea sportivă pe autostradă.",
+      "it": "Sospensioni ad aria complete con regolazione elettronica attiva. Permette di alzare l'auto su fondi sconnessi o abbassarla a velocità elevate."
+    }
+  },
+  {
+    "slug": "rear-axle-steering-0n5",
+    "code": "0N5",
+    "title": {
+      "en": "Dynamic Rear-Axle All-Wheel Steering (0N5)",
+      "ro": "Punte Spate Viratoare Activă (0N5)",
+      "it": "Asse Posteriore Sterzante Dinamico (0N5)"
+    },
+    "desc": {
+      "en": "Turns rear wheels in counter-phase for sports-car agility in tight parking and in-phase at high speeds for unmatched composure.",
+      "ro": "Rotește puntea spate pentru o manevrabilitate excepțională în oraș și stabilitate chirurgicală în curbe la viteze mari.",
+      "it": "Sterza le ruote posteriori per agilità da sportiva nei parcheggi e stabilità totale alle alte velocità autostradali."
+    }
+  },
+  {
+    "slug": "ventilated-massage-seats-4d5",
+    "code": "4D3 / 4D5",
+    "title": {
+      "en": "Front Seat Active Climate Ventilation & Massage (4D5)",
+      "ro": "Ventilație Scaune și Masaj Pneumatic (4D5)",
+      "it": "Sedili Anteriori Ventilati con Massaggio Pneumatico (4D5)"
+    },
+    "desc": {
+      "en": "Perforated leather cooling fans paired with therapeutic pneumatic air chambers for effortless thousand-kilometer trans-European touring.",
+      "ro": "Ventilație activă prin piele perforată combinată cu perne de masaj pentru confort suprem pe rute europene lungi.",
+      "it": "Ventilazione attiva con microfori e cuscini massaggianti per viaggiare per migliaia di chilometri senza alcun affaticamento."
+    }
+  },
+  {
+    "slug": "panoramic-glass-roof-3fu",
+    "code": "3FU",
+    "title": {
+      "en": "Panoramic Dual Glass Tilt-and-Slide Sunroof (3FU)",
+      "ro": "Plafon Panoramic Glisant din Sticlă (3FU)",
+      "it": "Tetto Panoramico Apribile in Vetro (3FU)"
+    },
+    "desc": {
+      "en": "Full panoramic glass overhead canopy with electric sunblind and tilting front section for an open-air Scandinavian experience.",
+      "ro": "Plafon panoramic complet cu deschidere electrică și jaluzea atermică ce oferă luminozitate maximă habitaclului.",
+      "it": "Ampio tetto panoramico con apertura elettrica e tendina parasole per un'esperienza di guida ariosa e luminosa."
+    }
+  },
+  {
+    "slug": "sport-chrono-package-qr5",
+    "code": "QR5",
+    "title": {
+      "en": "Sport Chrono Package with Mode Switch (QR5)",
+      "ro": "Pachet Sport Chrono cu Ceas pe Bord (QR5)",
+      "it": "Pacchetto Sport Chrono con Selettore al Volante (QR5)"
+    },
+    "desc": {
+      "en": "Analog dashboard stopwatch, Launch Control acceleration mapping, and dynamic transmission tuning that preserves collector value.",
+      "ro": "Ceasul analogic pe bord, Launch Control pentru demaraje brutale și comutatorul rotativ de moduri pe volan ce cresc valoarea de revânzare.",
+      "it": "Cronometro analogico su plancia, Launch Control e selettore rotativo per prestazioni al vertice e massima tenuta del valore."
+    }
+  },
+  {
+    "slug": "burmester-high-end-sound-9vj",
+    "code": "9VJ / 8RF",
+    "title": {
+      "en": "High-End 3D Surround Sound (Burmester / B&O)",
+      "ro": "Sistem Audio de Vârf 3D High-End (Burmester / B&O)",
+      "it": "Impianto Audio High-End 3D Surround (Burmester / B&O)"
+    },
+    "desc": {
+      "en": "Over 1450 Watts of audiophile concert acoustics driven by AMT ribbon tweeters and 21 individually amplified speakers.",
+      "ro": "Peste 1450 de Wați de puritate acustică de sală de concert, cu 21 de difuzoare și tweetere speciale cu bandă de aluminiu.",
+      "it": "Oltre 1450 Watt di fedeltà acustica assoluta con 21 altoparlanti e tweeter a nastro per un'esperienza sonora ineguagliabile."
+    }
+  },
+  {
+    "slug": "matrix-laser-headlights-8g4",
+    "code": "8G4 / 8IU",
+    "title": {
+      "en": "HD Matrix LED / Laser Headlights with Dynamic Light (8G4)",
+      "ro": "Faruri HD Matrix Laser cu Fascicul Adaptiv Dinamic (8G4)",
+      "it": "Fari HD Matrix LED Laser con Fascio Adattivo Dinamico (8G4)"
+    },
+    "desc": {
+      "en": "Precision micro-mirror illumination cutting pitch-black Nordic nights with 600m laser high beams without dazzling oncoming drivers.",
+      "ro": "Iluminare adaptivă de înaltă precizie ce transformă noaptea în zi pe o rază de 600 de metri fără a orbi traficul din sens opus.",
+      "it": "Illuminazione laser ad alta precisione con portata fino a 600 metri, che esclude automaticamente i veicoli per non abbagliare mai."
+    }
+  },
+  {
+    "slug": "sport-differential-torque-vectoring-gh2",
+    "code": "GH2 / 2T4",
+    "title": {
+      "en": "Quattro Sport Differential with Torque Vectoring (GH2)",
+      "ro": "Diferențial Sport Quattro cu Distribuție Activă a Cuplului (GH2)",
+      "it": "Differenziale Sportivo Posteriore con Torque Vectoring (GH2)"
+    },
+    "desc": {
+      "en": "Actively distributes torque to the outside rear wheel under power, eliminating understeer and carving mountain apexes.",
+      "ro": "Distribuie mecanic cuplul pe roata exterioară din viraj, eliminând subvirarea și lipind mașina de asfalt chiar și pe carosabil umed sau înghețat.",
+      "it": "Invia attivamente la coppia alla ruota esterna in curva, eliminando il sottosterzo e garantendo aderenza assoluta anche su neve e pioggia."
+    }
+  },
+  {
+    "slug": "electric-tow-hitch-1d3",
+    "code": "1D3 / 1D9",
+    "title": {
+      "en": "Electrically Folding Tow Bar Hitch with Trailer Assist (1D3)",
+      "ro": "Cârlig de Remorcare Retractabil Electric din Buton (1D3)",
+      "it": "Gancio Traino Estraibile Elettricamente con Trailer Assist (1D3)"
+    },
+    "desc": {
+      "en": "Original factory power folding hitch capable of 3500kg towing capacity, integrated seamlessly behind the rear bumper.",
+      "ro": "Cârlig retractabil electric ascuns în bara spate, ideal pentru remorcare ambarcațiuni, platforme auto sau rulote (până la 3500 kg).",
+      "it": "Gancio di traino a scomparsa elettrica integrato nel paraurti, certificato per carichi fino a 3500 kg con controllo di stabilità rimorchio."
+    }
+  },
+  {
+    "slug": "head-up-display-ks1",
+    "code": "KS1 / 610",
+    "title": {
+      "en": "Head-Up Display with Navigation Projection (KS1)",
+      "ro": "Head-Up Display Color cu Proiecție pe Parbriz (KS1)",
+      "it": "Head-Up Display a Colori con Proiezione su Parabrezza (KS1)"
+    },
+    "desc": {
+      "en": "High-definition virtual projection onto the windshield displaying speed, driver assistance warnings, and turn-by-turn route directions.",
+      "ro": "Proiecție holografică direct pe parbriz cu viteza, semnele de circulație, pilotul automat și indicațiile de navigare.",
+      "it": "Proiezione nitida delle informazioni di guida, limiti di velocità e navigazione direttamente nel campo visivo del guidatore."
+    }
+  },
+  {
+    "slug": "surround-view-360-cameras-ka6",
+    "code": "KA6 / 7Y1",
+    "title": {
+      "en": "360-Degree Surround View 3D Cameras (KA6)",
+      "ro": "Camere Video 360 Grade 3D Surround View (KA6)",
+      "it": "Telecamere Perimetrali 360° con Vista 3D (KA6)"
+    },
+    "desc": {
+      "en": "Multiple ultra-wide cameras stitched into a virtual overhead 3D view with curb collision detection and automatic trailer assist.",
+      "ro": "Vedere aeriană 3D virtuală în timp real pentru manevre milimetrice, protecția jantelor de borduri și asistență la parcare.",
+      "it": "Visione panoramica 3D a 360 gradi per manovrare con sicurezza millimetrica e salvaguardare i cerchi in lega dai marciapiedi."
+    }
+  },
+  {
+    "slug": "four-zone-climate-9ae",
+    "code": "9AE / KH7",
+    "title": {
+      "en": "4-Zone Deluxe Automatic Climate Control (9AE)",
+      "ro": "Climatizare Automată Deluxe pe 4 Zone (9AE)",
+      "it": "Climatizzatore Automatico Deluxe a 4 Zone (9AE)"
+    },
+    "desc": {
+      "en": "Independent temperature and blower regulation for all four outboard passengers, complete with dedicated rear digital touch controls.",
+      "ro": "Reglare individuală a temperaturii și debitului de aer pentru fiecare pasager, cu display tactil digital dedicat pentru locurile din spate.",
+      "it": "Controllo termico e flussi d'aria completamente indipendenti per 4 passeggeri con pannello touch digitale dedicato posteriore."
+    }
+  },
+  {
+    "slug": "driving-assistant-autopilot-pcc",
+    "code": "PCC / 5AU",
+    "title": {
+      "en": "Driving Assistant Professional Radar Autopilot (PCC)",
+      "ro": "Pachet Avansat Asistență Șofer și Autopilot Radar (PCC/5AU)",
+      "it": "Driving Assistant Professional con Guida Semi-Autonoma (PCC/5AU)"
+    },
+    "desc": {
+      "en": "Active cruise control with Stop & Go, active lane-centering steering assist, emergency evasive maneuver support, and side collision protection.",
+      "ro": "Pilot automat adaptiv cu menținere pe bandă, funcție completă de Stop&Go în ambuteiaje și frânare automată de urgență.",
+      "it": "Cruise control adattivo con mantenimento attivo della corsia, assistenza nel traffico congestionato e frenata d'emergenza predittiva."
+    }
+  },
+  {
+    "slug": "carbon-ceramic-brakes-pc2",
+    "code": "PC2 / 1LX",
+    "title": {
+      "en": "High-Performance Carbon Ceramic Brakes (PC2)",
+      "ro": "Sistem de Frânare Carbon-Ceramic de Înaltă Performanță (PC2)",
+      "it": "Impianto Frenante in Carbo-Ceramica ad Alte Prestazioni (PC2)"
+    },
+    "desc": {
+      "en": "Massive carbon-silicon carbide discs delivering fade-free deceleration under extreme thermal load with a 50% unsprung weight reduction.",
+      "ro": "Discuri ceramice ranforsate cu fibră de carbon ce asigură o decelerare brutală fără oboseală termică și o durabilitate de peste 300.000 km.",
+      "it": "Dischi carbo-ceramici ad altissima resistenza termica che eliminano ogni fading e riducono sensibilmente le masse non sospese."
+    }
+  },
+  {
+    "slug": "carbon-fiber-interior-vt9",
+    "code": "VT9 / 6Q7",
+    "title": {
+      "en": "Authentic Carbon Fiber Interior Trim Package (VT9)",
+      "ro": "Pachet Ornamente Interioare din Fibră de Carbon Autentică (VT9)",
+      "it": "Pacchetto Inserti Interni in Vera Fibra di Carbonio (VT9)"
+    },
+    "desc": {
+      "en": "Matte or high-gloss woven carbon fiber accents on dashboard, door panels, and center console, complemented by illuminated carbon door sills.",
+      "ro": "Finisaje din fibră de carbon țesută pe planșa de bord, consola centrală și panourile ușilor, completate de praguri iluminate.",
+      "it": "Eleganti inserti in fibra di carbonio a trama a vista su cruscotto, console centrale e battitacco illuminati per un look esclusivo."
+    }
+  },
+  {
+    "slug": "18-way-adaptive-sport-seats-q1j",
+    "code": "Q1J / 4A4",
+    "title": {
+      "en": "18-Way Adaptive Memory Sports Seats Plus (Q1J)",
+      "ro": "Scaune Sport Adaptive cu Reglaj Electric pe 18 Direcții (Q1J)",
+      "it": "Sedili Sportivi Adattivi Plus con Regolazione a 18 Vie (Q1J)"
+    },
+    "desc": {
+      "en": "Pneumatically adjustable side bolsters on cushion and backrest, memory profiles, lumbar support, and integrated heated seat elements front and rear.",
+      "ro": "Suport lateral ajustabil pneumatic pentru pernă și spătar, profiluri de memorie și încălzire integrală în scaune față și spate.",
+      "it": "Fianchetti regolabili pneumaticamente per un contenimento perfetto in curva, memorie di posizione e riscaldamento anteriore e posteriore."
+    }
+  },
+  {
+    "slug": "sport-exhaust-switchable-valves-0p9",
+    "code": "0P9 / 176",
+    "title": {
+      "en": "Factory Switchable Sports Exhaust System (0P9)",
+      "ro": "Evacuare Sport din Fabrică cu Supape Active Comutabile (0P9)",
+      "it": "Scarico Sportivo con Valvole Attive Selezionabili (0P9)"
+    },
+    "desc": {
+      "en": "Dual active exhaust flaps controlled via dashboard console button, unleashing an aggressive acoustics tone on demand while remaining whisper-quiet in city mode.",
+      "ro": "Tobe sport cu supape acționate electronic la buton, oferind un sunet baritonal gutural la accelerare și discreție totală în modul confort.",
+      "it": "Valvole elettroattuate nello scarico attivabili da tasto dedicato, per una timbrica entusiasmante nelle accelerazioni e massima silenziosità in autostrada."
+    }
+  },
+  {
+    "slug": "air-quality-ionizer-fragrance-2v4",
+    "code": "2V4 / 9AQ",
+    "title": {
+      "en": "Air Quality Package with Dual Ionizers & Cabin Fragrance (2V4)",
+      "ro": "Pachet Calitate Aer cu Ionizator Dublu și Aromatizare (2V4)",
+      "it": "Pacchetto Ionizzazione e Diffusione Fragranze Abitacolo (2V4)"
+    },
+    "desc": {
+      "en": "Electrostatic air ionization combined with subtle bespoke scent cartridges, reducing airborne allergens and maintaining a fresh Scandinavian atmosphere.",
+      "ro": "Ionizare electrostatică și parfumare discretă a habitaclului, eliminând mirosurile și poluanții microscopici din aer.",
+      "it": "Ionizzatore d'aria elettrostatico abbinato a diffusore di fragranze personalizzate per un microclima interno puro e rilassante."
+    }
+  }
+]
+
+with open("src/pr_options_data.json", "w", encoding="utf-8") as f:
+    json.dump(PR_OPTIONS, f, indent=2, ensure_ascii=False)
+print(f"Exported {len(PR_OPTIONS)} PR options to pr_options_data.json")

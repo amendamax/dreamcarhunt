@@ -1,7 +1,5 @@
-/**
- * DreamCarHunt - Cloudflare Edge Worker API
- * Integrates Cloudflare D1 SQLite database with static assets
- */
+import { MODELS } from './models_data.js';
+import { PR_OPTIONS, renderProgrammaticCarPage, generateCarSitemapXml } from './programmatic.js';
 
 export default {
   async fetch(request, env, ctx) {
@@ -36,6 +34,64 @@ export default {
         status: 404,
         headers: { 'Content-Type': 'text/plain; charset=UTF-8' },
       });
+    }
+
+    // 1. Programmatic Sitemaps for Googlebot
+    if (url.pathname === '/sitemap-index.xml') {
+      const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://dreamcarhunt.com/sitemaps/sitemap-cars-en.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://dreamcarhunt.com/sitemaps/sitemap-cars-ro.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://dreamcarhunt.com/sitemaps/sitemap-cars-it.xml</loc>
+  </sitemap>
+</sitemapindex>`;
+      return new Response(sitemapIndex, {
+        headers: { 'Content-Type': 'application/xml; charset=UTF-8', 'Cache-Control': 'public, max-age=86400' }
+      });
+    }
+
+    if (url.pathname === '/sitemaps/sitemap-cars-en.xml') {
+      return new Response(generateCarSitemapXml('en'), {
+        headers: { 'Content-Type': 'application/xml; charset=UTF-8', 'Cache-Control': 'public, max-age=86400' }
+      });
+    }
+    if (url.pathname === '/sitemaps/sitemap-cars-ro.xml') {
+      return new Response(generateCarSitemapXml('ro'), {
+        headers: { 'Content-Type': 'application/xml; charset=UTF-8', 'Cache-Control': 'public, max-age=86400' }
+      });
+    }
+    if (url.pathname === '/sitemaps/sitemap-cars-it.xml') {
+      return new Response(generateCarSitemapXml('it'), {
+        headers: { 'Content-Type': 'application/xml; charset=UTF-8', 'Cache-Control': 'public, max-age=86400' }
+      });
+    }
+
+    // 2. Programmatic SEO Landing Pages (Edge Dynamic SSR)
+    // Matches: /hunt/:model/:pr OR /ro/hunt/:model/:pr OR /it/hunt/:model/:pr
+    const match = url.pathname.match(/^\/(?:(it|ro)\/)?(?:hunt|vanatoare|caccia)\/([a-zA-Z0-9_-]+)\/([a-zA-Z0-9_-]+)\/?$/i);
+    if (match) {
+      const lang = match[1] ? match[1].toLowerCase() : 'en';
+      const modelSlug = match[2].toLowerCase();
+      const prSlug = match[3].toLowerCase();
+
+      const model = MODELS.find(m => m.slug.toLowerCase() === modelSlug);
+      const prOption = PR_OPTIONS.find(p => p.slug.toLowerCase() === prSlug);
+
+      if (model && prOption) {
+        const html = renderProgrammaticCarPage(model, prOption, lang);
+        return new Response(html, {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/html; charset=UTF-8',
+            'Cache-Control': 'public, max-age=604800, s-maxage=2592000', // Cache at edge for 30 days
+          }
+        });
+      }
     }
 
     // Route API requests
