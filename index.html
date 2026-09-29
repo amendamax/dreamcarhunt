@@ -101,7 +101,9 @@
             <nav class="nav-links">
                 <a href="#how-it-works">How It Works</a>
                 <a href="#unicorns">Factory Unicorns</a>
+                <a href="#pr-decoder">PR Codes</a>
                 <a href="#arbitrage">Swedish Arbitrage</a>
+                <a href="#nordic-trust">Nordic Trust</a>
                 
                 <!-- Language Switcher -->
                 <div class="lang-switcher">
@@ -312,6 +314,38 @@
         </div>
     </section>
 
+    <!-- PR-CODE DECODER & RADAR SECTION -->
+    <section id="pr-decoder" class="section-pr-decoder">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge-sub">SURGICAL FACTORY AUDIT</span>
+                <h2>Factory PR Option Code Radar</h2>
+                <p>Standard dealer ads hide the true factory specification. Use our European intelligence decoder to reveal factory option codes (9M9, VW6, 1BK, Burmester) that guarantee resale value.</p>
+            </div>
+
+            <div class="pr-search-container">
+                <div class="pr-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass pr-search-icon"></i>
+                    <input type="text" id="pr-search-input" class="pr-search-input" placeholder="Search PR code or option (e.g. 9M9, Webasto, Double Glass, Burmester, Air Suspension)..." oninput="searchPrInput(this.value)">
+                </div>
+                <div class="pr-category-pills">
+                    <button class="pr-cat-pill active" data-cat="ALL" onclick="filterPrCategory('ALL', this)"><i class="fa-solid fa-list"></i> All Options</button>
+                    <button class="pr-cat-pill" data-cat="CLIMATE" onclick="filterPrCategory('CLIMATE', this)"><i class="fa-solid fa-fire"></i> Climate &amp; Webasto</button>
+                    <button class="pr-cat-pill" data-cat="ACOUSTICS" onclick="filterPrCategory('ACOUSTICS', this)"><i class="fa-solid fa-volume-xmark"></i> Acoustic Double Glass</button>
+                    <button class="pr-cat-pill" data-cat="CHASSIS" onclick="filterPrCategory('CHASSIS', this)"><i class="fa-solid fa-cloud"></i> Air Suspension &amp; 4WS</button>
+                    <button class="pr-cat-pill" data-cat="INTERIOR" onclick="filterPrCategory('INTERIOR', this)"><i class="fa-solid fa-couch"></i> Ventilated Seats &amp; Roof</button>
+                    <button class="pr-cat-pill" data-cat="PERFORMANCE" onclick="filterPrCategory('PERFORMANCE', this)"><i class="fa-solid fa-stopwatch"></i> Sport Chrono</button>
+                    <button class="pr-cat-pill" data-cat="AUDIO" onclick="filterPrCategory('AUDIO', this)"><i class="fa-solid fa-music"></i> Burmester &amp; BOSE</button>
+                </div>
+            </div>
+
+            <!-- DYNAMIC PR CODE GRID -->
+            <div id="pr-grid" class="pr-grid">
+                <!-- Injected dynamically via app.js -->
+            </div>
+        </div>
+    </section>
+
     <!-- ARBITRAGE COMPARISON SECTION -->
     <section id="arbitrage" class="section-arbitrage">
         <div class="container">
@@ -321,25 +355,66 @@
                     <h2>Why Scandinavian Cars Are Pure Gold:</h2>
                     <ul class="benefit-list">
                         <li><i class="fa-solid fa-check-circle"></i> <strong>Currency Arbitrage (SEK ➔ EUR):</strong> The softened Swedish Krona delivers an automatic 10%–15% purchasing power discount when paying in Euros.</li>
-                        <li><i class="fa-solid fa-check-circle"></i> <strong>Supreme Winter Specifications:</strong> Factory Webasto auxiliary heaters (`9M9`), heated steering wheels, and acoustic double glass (`VW6`) are standard Swedish necessities, not overpriced options.</li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong>Supreme Winter Specifications:</strong> Factory Webasto auxiliary heaters (<code>9M9</code>), heated steering wheels, and acoustic double glass (<code>VW6</code>) are standard Swedish necessities, not overpriced options.</li>
                         <li><i class="fa-solid fa-check-circle"></i> <strong>100% Transparent State Registries:</strong> Swedish law strictly records mileage at every technical inspection (Car.info / Transportstyrelsen). Zero odometer rollbacks.</li>
                         <li><i class="fa-solid fa-check-circle"></i> <strong>Frictionless EU Import:</strong> Sweden is a full EU member state. Zero customs duties or tariffs entering Germany, Italy, France, or Romania!</li>
                     </ul>
                 </div>
                 <div class="arbitrage-calc">
                     <div class="calc-card">
-                        <h3><i class="fa-solid fa-calculator"></i> Quick Arbitrage Calculator</h3>
+                        <div class="live-rate-tag">
+                            <i class="fa-solid fa-chart-line"></i> <strong>ECB LIVE:</strong> 1 EUR = 11.38 SEK
+                        </div>
+                        <h3><i class="fa-solid fa-calculator"></i> Real-Time Arbitrage Calculator</h3>
                         <div class="calc-group">
-                            <label>Car Price in Sweden (SEK):</label>
+                            <label>Vehicle Price in Sweden (SEK):</label>
                             <input type="number" id="calc-sek" value="350000" oninput="calculateSavings()">
                         </div>
                         <div class="calc-results">
-                            <div class="res-row"><span>Net Euro Equivalent:</span> <strong id="calc-eur">€30,700</strong></div>
-                            <div class="res-row"><span>Average Local Market:</span> <strong>€36,000</strong></div>
-                            <div class="res-row highlight"><span>Estimated Net Savings:</span> <strong id="calc-diff">+€5,300</strong></div>
+                            <div class="res-row"><span>Net Euro Equivalent:</span> <strong id="calc-eur">€30,755</strong></div>
+                            <div class="res-row"><span>Doorstep Landed (Transport + Pre-Purchase Audit):</span> <strong id="calc-landed">€31,955</strong></div>
+                            <div class="res-row"><span>Continental Market (Mobile.de / AutoScout24):</span> <strong id="calc-market">€36,445</strong></div>
+                            <div class="res-row highlight">
+                                <span>Estimated Net Profit in Pocket:</span>
+                                <div><strong id="calc-diff">+€4,490</strong> <span id="calc-percent" style="font-size:0.85rem; color:#10b981; font-weight:700;">(-12.3%)</span></div>
+                            </div>
                         </div>
-                        <p class="calc-note">*Calculated using official ECB real-time exchange rates.</p>
+                        <p class="calc-note">*Calculated using official European Central Bank (ECB) real-time exchange feeds.</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NORDIC TRUST & CAR.INFO AUDIT SECTION -->
+    <section id="nordic-trust" class="section-nordic-trust">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge-sub">OFFICIAL SCANDINAVIAN INTEGRITY</span>
+                <h2>Why Sweden Has Europe's Cleanest Vehicle Titles</h2>
+                <p>Unlike continental markets plagued by hidden accidents and rolled-back odometers, the Scandinavian system is legally transparent by constitutional mandate.</p>
+            </div>
+
+            <div class="trust-grid">
+                <div class="trust-card">
+                    <div class="trust-icon-box"><i class="fa-solid fa-fingerprint"></i></div>
+                    <h3>Car.info &amp; Transportstyrelsen</h3>
+                    <p>Every single kilometer is logged digitally by the Swedish Transport Agency at every yearly technical inspection (Besiktning). Odometer rollback is a serious criminal offense in Sweden.</p>
+                </div>
+                <div class="trust-card">
+                    <div class="trust-icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>0% EU Customs &amp; Zero Tariffs</h3>
+                    <p>Sweden is a core European Union member state. Vehicles move completely free of customs duties or import tariffs into Germany, Italy, Romania, or France with verified EU VAT compliance.</p>
+                </div>
+                <div class="trust-card">
+                    <div class="trust-icon-box"><i class="fa-solid fa-snowflake"></i></div>
+                    <h3>Nordic Factory Winter Armor</h3>
+                    <p>Swedish cars feature factory rustproofing cavity wax, heavy-duty alternators, high-capacity cold-crank batteries, and standard heated components built to withstand Arctic conditions.</p>
+                </div>
+                <div class="trust-card">
+                    <div class="trust-icon-box"><i class="fa-solid fa-clipboard-check"></i></div>
+                    <h3>150-Point Independent Audit</h3>
+                    <p>Before any vehicle is acquired, our local Swedish partners execute an exhaustive computerized diagnostic readout, paint depth scan, and mechanical road audit before transport release.</p>
                 </div>
             </div>
         </div>

@@ -101,7 +101,9 @@
             <nav class="nav-links">
                 <a href="#how-it-works">Come Funziona</a>
                 <a href="#unicorns">Unicorni di Fabbrica</a>
+                <a href="#pr-decoder">Codici PR</a>
                 <a href="#arbitrage">Arbitraggio Svezia</a>
+                <a href="#nordic-trust">Garanzia Svedese</a>
                 
                 <!-- Language Switcher -->
                 <div class="lang-switcher">
@@ -312,6 +314,38 @@
         </div>
     </section>
 
+    <!-- PR-CODE DECODER & RADAR SECTION -->
+    <section id="pr-decoder" class="section-pr-decoder">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge-sub">AUDIT CHIRURGICO DI FABBRICA</span>
+                <h2>Radar dei Codici PR di Fabbrica</h2>
+                <p>I normali annunci oscurano le vere dotazioni dell'auto. Usa il nostro decodificatore europeo per scoprire gli optional rari di fabbrica (9M9, VW6, 1BK, Burmester) che garantiscono un valore di rivendita superiore.</p>
+            </div>
+
+            <div class="pr-search-container">
+                <div class="pr-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass pr-search-icon"></i>
+                    <input type="text" id="pr-search-input" class="pr-search-input" placeholder="Cerca codice PR o optional (es. 9M9, Webasto, Doppi vetri, Burmester, Sospensioni)..." oninput="searchPrInput(this.value)">
+                </div>
+                <div class="pr-category-pills">
+                    <button class="pr-cat-pill active" data-cat="ALL" onclick="filterPrCategory('ALL', this)"><i class="fa-solid fa-list"></i> Tutti gli Optional</button>
+                    <button class="pr-cat-pill" data-cat="CLIMATE" onclick="filterPrCategory('CLIMATE', this)"><i class="fa-solid fa-fire"></i> Clima &amp; Webasto</button>
+                    <button class="pr-cat-pill" data-cat="ACOUSTICS" onclick="filterPrCategory('ACOUSTICS', this)"><i class="fa-solid fa-volume-xmark"></i> Doppi Vetri Acustici</button>
+                    <button class="pr-cat-pill" data-cat="CHASSIS" onclick="filterPrCategory('CHASSIS', this)"><i class="fa-solid fa-cloud"></i> Sospensioni &amp; Asse Post.</button>
+                    <button class="pr-cat-pill" data-cat="INTERIOR" onclick="filterPrCategory('INTERIOR', this)"><i class="fa-solid fa-couch"></i> Sedili Ventilati &amp; Tetto</button>
+                    <button class="pr-cat-pill" data-cat="PERFORMANCE" onclick="filterPrCategory('PERFORMANCE', this)"><i class="fa-solid fa-stopwatch"></i> Sport Chrono</button>
+                    <button class="pr-cat-pill" data-cat="AUDIO" onclick="filterPrCategory('AUDIO', this)"><i class="fa-solid fa-music"></i> Burmester &amp; BOSE</button>
+                </div>
+            </div>
+
+            <!-- DYNAMIC PR CODE GRID -->
+            <div id="pr-grid" class="pr-grid">
+                <!-- Injected dynamically via app.js -->
+            </div>
+        </div>
+    </section>
+
     <!-- ARBITRAGE COMPARISON SECTION -->
     <section id="arbitrage" class="section-arbitrage">
         <div class="container">
@@ -328,18 +362,59 @@
                 </div>
                 <div class="arbitrage-calc">
                     <div class="calc-card">
-                        <h3><i class="fa-solid fa-calculator"></i> Calcolatore Rapido di Arbitraggio</h3>
+                        <div class="live-rate-tag">
+                            <i class="fa-solid fa-chart-line"></i> <strong>BCE LIVE:</strong> 1 EUR = 11.38 SEK
+                        </div>
+                        <h3><i class="fa-solid fa-calculator"></i> Calcolatore di Arbitraggio in Tempo Reale</h3>
                         <div class="calc-group">
                             <label>Prezzo Auto in Svezia (SEK):</label>
                             <input type="number" id="calc-sek" value="350000" oninput="calculateSavings()">
                         </div>
                         <div class="calc-results">
-                            <div class="res-row"><span>Equivalente Netto in Euro:</span> <strong id="calc-eur">30.700 €</strong></div>
-                            <div class="res-row"><span>Prezzo Medio Mercato Locale:</span> <strong>36.000 €</strong></div>
-                            <div class="res-row highlight"><span>Risparmio Netto Stimato:</span> <strong id="calc-diff">+5.300 €</strong></div>
+                            <div class="res-row"><span>Equivalente Netto in Euro:</span> <strong id="calc-eur">30.755 €</strong></div>
+                            <div class="res-row"><span>Consegna a Domicilio (Trasporto + Perizia):</span> <strong id="calc-landed">31.955 €</strong></div>
+                            <div class="res-row"><span>Media Mercato Italiano (AutoScout24):</span> <strong id="calc-market">36.445 €</strong></div>
+                            <div class="res-row highlight">
+                                <span>Risparmio Netto Rimasto in Tasca:</span>
+                                <div><strong id="calc-diff">+4.490 €</strong> <span id="calc-percent" style="font-size:0.85rem; color:#10b981; font-weight:700;">(-12.3%)</span></div>
+                            </div>
                         </div>
-                        <p class="calc-note">*Calcolato al tasso di cambio ufficiale BCE in tempo reale.</p>
+                        <p class="calc-note">*Calcolato al tasso di cambio ufficiale trasmesso in tempo reale dalla Banca Centrale Europea (BCE).</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NORDIC TRUST & CAR.INFO AUDIT SECTION -->
+    <section id="nordic-trust" class="section-nordic-trust">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge-sub">INTEGRITÀ SCANDINAVA UFFICIALE</span>
+                <h2>Perché la Svezia Ha i Titoli Auto Più Puliti d'Europa</h2>
+                <p>A differenza dei mercati continentali dove incidenti e chilometri scalati sono frequenti, il sistema svedese è trasparente per mandato costituzionale.</p>
+            </div>
+
+            <div class="trust-grid">
+                <div class="trust-card">
+                    <div class="trust-icon-box"><i class="fa-solid fa-fingerprint"></i></div>
+                    <h3>Car.info &amp; Transportstyrelsen</h3>
+                    <p>Ogni chilometro viene registrato digitalmente dall'Agenzia dei Trasporti svedese a ogni revisione periodica (Besiktning). La manomissione del contachilometri è reato penale in Svezia.</p>
+                </div>
+                <div class="trust-card">
+                    <div class="trust-icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>Zero Dazi Doganali UE</h3>
+                    <p>La Svezia è parte integrante dell'Unione Europea e dell'area Schengen. Le vetture circolano liberamente senza dazi doganali, con IVA intracomunitaria verificata alla fonte.</p>
+                </div>
+                <div class="trust-card">
+                    <div class="trust-icon-box"><i class="fa-solid fa-snowflake"></i></div>
+                    <h3>Protezione Invernale di Fabbrica</h3>
+                    <p>Le auto svedesi escono di fabbrica con trattamento anticorrosione a cera per pianale, alternatori maggiorati, batterie resistenti al gelo polare e riscaldamento ausiliario di serie.</p>
+                </div>
+                <div class="trust-card">
+                    <div class="trust-icon-box"><i class="fa-solid fa-clipboard-check"></i></div>
+                    <h3>Perizia Diagnostica in 150 Punti</h3>
+                    <p>Prima di qualsiasi acquisto, i nostri tecnici certificati in loco effettuano diagnosi elettronica completa, scansione spessore vernice e test su strada prima del carico sul bisarca.</p>
                 </div>
             </div>
         </div>

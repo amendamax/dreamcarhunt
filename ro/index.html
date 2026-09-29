@@ -101,7 +101,9 @@
             <nav class="nav-links">
                 <a href="#how-it-works">Cum Funcționează</a>
                 <a href="#unicorns">Inorogi de Fabrică</a>
+                <a href="#pr-decoder">Coduri PR</a>
                 <a href="#arbitrage">Arbitraj Suedia</a>
+                <a href="#nordic-trust">Garanție Suedeză</a>
                 
                 <!-- Language Switcher -->
                 <div class="lang-switcher">
@@ -312,6 +314,38 @@
         </div>
     </section>
 
+    <!-- PR-CODE DECODER & RADAR SECTION -->
+    <section id="pr-decoder" class="section-pr-decoder">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge-sub">AUDIT CHIRURGICAL DE FABRICĂ</span>
+                <h2>Radarul Codurilor de Opțiuni PR</h2>
+                <p>Anunțurile obișnuite ascund dotările reale. Folosește decodorul nostru european pentru a găsi opțiunile rare de fabrică (9M9, VW6, 1BK, Burmester) care garantează valoarea mașinii la revânzare.</p>
+            </div>
+
+            <div class="pr-search-container">
+                <div class="pr-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass pr-search-icon"></i>
+                    <input type="text" id="pr-search-input" class="pr-search-input" placeholder="Caută cod PR sau dotare (ex: 9M9, Webasto, Geamuri duble, Burmester, Perne aer)..." oninput="searchPrInput(this.value)">
+                </div>
+                <div class="pr-category-pills">
+                    <button class="pr-cat-pill active" data-cat="ALL" onclick="filterPrCategory('ALL', this)"><i class="fa-solid fa-list"></i> Toate Opțiunile</button>
+                    <button class="pr-cat-pill" data-cat="CLIMATE" onclick="filterPrCategory('CLIMATE', this)"><i class="fa-solid fa-fire"></i> Climatizare &amp; Webasto</button>
+                    <button class="pr-cat-pill" data-cat="ACOUSTICS" onclick="filterPrCategory('ACOUSTICS', this)"><i class="fa-solid fa-volume-xmark"></i> Geamuri Duble Fono</button>
+                    <button class="pr-cat-pill" data-cat="CHASSIS" onclick="filterPrCategory('CHASSIS', this)"><i class="fa-solid fa-cloud"></i> Perne Aer &amp; Punte Spate</button>
+                    <button class="pr-cat-pill" data-cat="INTERIOR" onclick="filterPrCategory('INTERIOR', this)"><i class="fa-solid fa-couch"></i> Scaune Ventilate &amp; Plafon</button>
+                    <button class="pr-cat-pill" data-cat="PERFORMANCE" onclick="filterPrCategory('PERFORMANCE', this)"><i class="fa-solid fa-stopwatch"></i> Sport Chrono</button>
+                    <button class="pr-cat-pill" data-cat="AUDIO" onclick="filterPrCategory('AUDIO', this)"><i class="fa-solid fa-music"></i> Burmester &amp; BOSE</button>
+                </div>
+            </div>
+
+            <!-- DYNAMIC PR CODE GRID -->
+            <div id="pr-grid" class="pr-grid">
+                <!-- Injected dynamically via app.js -->
+            </div>
+        </div>
+    </section>
+
     <!-- ARBITRAGE COMPARISON SECTION -->
     <section id="arbitrage" class="section-arbitrage">
         <div class="container">
@@ -328,18 +362,59 @@
                 </div>
                 <div class="arbitrage-calc">
                     <div class="calc-card">
-                        <h3><i class="fa-solid fa-calculator"></i> Calculator Rapid de Arbitraj</h3>
+                        <div class="live-rate-tag">
+                            <i class="fa-solid fa-chart-line"></i> <strong>BCE LIVE:</strong> 1 EUR = 11.38 SEK
+                        </div>
+                        <h3><i class="fa-solid fa-calculator"></i> Calculator de Arbitraj în Timp Real</h3>
                         <div class="calc-group">
                             <label>Preț Mașină în Suedia (SEK):</label>
                             <input type="number" id="calc-sek" value="350000" oninput="calculateSavings()">
                         </div>
                         <div class="calc-results">
-                            <div class="res-row"><span>Echivalent Net Euro:</span> <strong id="calc-eur">30.700 €</strong></div>
-                            <div class="res-row"><span>Preț Mediu Piață Locală:</span> <strong>36.000 €</strong></div>
-                            <div class="res-row highlight"><span>Economie Estimată Netă:</span> <strong id="calc-diff">+5.300 €</strong></div>
+                            <div class="res-row"><span>Echivalent Net Euro:</span> <strong id="calc-eur">30.755 €</strong></div>
+                            <div class="res-row"><span>Cost Livrat la Ușă (Transport + Inspecție):</span> <strong id="calc-landed">31.955 €</strong></div>
+                            <div class="res-row"><span>Media Pieței Locale (Mobile.de / Autovit):</span> <strong id="calc-market">36.445 €</strong></div>
+                            <div class="res-row highlight">
+                                <span>Economie Netă Rămasă în Buzunar:</span>
+                                <div><strong id="calc-diff">+4.490 €</strong> <span id="calc-percent" style="font-size:0.85rem; color:#10b981; font-weight:700;">(-12.3%)</span></div>
+                            </div>
                         </div>
-                        <p class="calc-note">*Calcul efectuat la cursul de schimb oficial BCE.</p>
+                        <p class="calc-note">*Calcul efectuat la cursul de schimb oficial transmis în timp real de Banca Centrală Europeană (BCE).</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NORDIC TRUST & CAR.INFO AUDIT SECTION -->
+    <section id="nordic-trust" class="section-nordic-trust">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge-sub">INTEGRITATE SCANDINAVĂ OFICIALĂ</span>
+                <h2>De Ce Suedia Are Cele Mai Curate Mașini din Europa</h2>
+                <p>Spre deosebire de piețele unde accidentele sunt ascunse și kilometrajul măsluit, sistemul suedez este 100% transparent prin lege constituțională.</p>
+            </div>
+
+            <div class="trust-grid">
+                <div class="trust-card">
+                    <div class="trust-icon-box"><i class="fa-solid fa-fingerprint"></i></div>
+                    <h3>Car.info &amp; Transportstyrelsen</h3>
+                    <p>Fiecare kilometru este înregistrat digital de Agenția de Transport a Suediei la fiecare inspecție tehnică periodică (Besiktning). Măsluirea kilometrajului este infracțiune penală gravă în Suedia.</p>
+                </div>
+                <div class="trust-card">
+                    <div class="trust-icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>Zero Taxe Vamale în UE</h3>
+                    <p>Suedia face parte integrantă din Uniunea Europeană și spațiul Schengen. Mașinile circulă complet liber de taxe vamale, cu TVA intracomunitar verificat direct la sursă.</p>
+                </div>
+                <div class="trust-card">
+                    <div class="trust-icon-box"><i class="fa-solid fa-snowflake"></i></div>
+                    <h3>Blindaj din Fabrică pentru Iarnă</h3>
+                    <p>Mașinile din Suedia vin din fabrică cu tratament de ceară anticorozivă pe dedesubt, alternatoare mărite, baterii rezistente la ger extrem și încălzire auxiliară gata montată.</p>
+                </div>
+                <div class="trust-card">
+                    <div class="trust-icon-box"><i class="fa-solid fa-clipboard-check"></i></div>
+                    <h3>Raport Diagnostic în 150 de Puncte</h3>
+                    <p>Înainte ca vreo mașină să fie achiziționată, partenerii noștri suedezi autorizați efectuează diagnoză computerizată completă, măsurarea grosimii vopselei și test pe șosea înainte de încărcare.</p>
                 </div>
             </div>
         </div>
