@@ -315,6 +315,11 @@ export function renderProgrammaticCarPage(model, prOption, lang = 'en') {
     <meta name="description" content="${metaDesc}">
     <link rel="canonical" href="${canonicalUrl}">
     
+    <!-- Search Engine Indexing & Bot Directives -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    
     <!-- Hreflang Tags -->
     <link rel="alternate" hreflang="en" href="https://dreamcarhunt.com/${basePath}">
     <link rel="alternate" hreflang="ro" href="https://dreamcarhunt.com/ro/${basePath}">

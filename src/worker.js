@@ -88,6 +88,7 @@ export default {
           status: 200,
           headers: {
             'Content-Type': 'text/html; charset=UTF-8',
+            'X-Robots-Tag': 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
             'Cache-Control': 'public, max-age=604800, s-maxage=2592000', // Cache at edge for 30 days
           }
         });

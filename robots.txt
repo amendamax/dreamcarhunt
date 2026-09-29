@@ -1,4 +1,25 @@
+# DreamCarHunt™ Robots Exclusion & Indexing Directives
+# Optimized for Google SGE, Googlebot, Bingbot & Automotive Intelligence Crawlers
+
 User-agent: *
 Allow: /
+Disallow: /api/
 
-Sitemap: https://dreamcarhunt.com/sitemap.xml
+# Explicit search engine bot permissions
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Dynamic Master Sitemap Index
+Sitemap: https://dreamcarhunt.com/sitemap-index.xml

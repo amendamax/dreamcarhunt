@@ -5,6 +5,16 @@
   "assets": {
     "directory": "."
   },
+  "routes": [
+    {
+      "pattern": "dreamcarhunt.com/*",
+      "zone_name": "dreamcarhunt.com"
+    },
+    {
+      "pattern": "www.dreamcarhunt.com/*",
+      "zone_name": "dreamcarhunt.com"
+    }
+  ],
   "d1_databases": [
     {
       "binding": "dreamcarhunt_db",
