@@ -470,20 +470,76 @@
                         </div>
                     </div>
 
+                    <!-- PRICING TIER SELECTOR -->
+                    <div class="pricing-tiers-wrapper">
+                        <div class="pricing-tiers-title">
+                            <i class="fa-solid fa-shield-halved" style="color: #e5b842;"></i> Alege Nivelul de Investigare &amp; Negociere:
+                        </div>
+                        <div class="pricing-tiers-grid">
+                            <!-- Tier 1: Standard Audit -->
+                            <div class="pricing-tier-card standard-tier" id="tier-card-standard" onclick="selectPricingTier('STANDARD')">
+                                <div class="pricing-tier-header">
+                                    <div class="pricing-tier-name">Audit Standard PR &amp; Istoric</div>
+                                    <div class="pricing-tier-price">99 lei</div>
+                                </div>
+                                <div class="pricing-tier-desc">Decodare opțiuni fabrică, verificare registru suedez și ghid de negociere.</div>
+                                <ul class="pricing-tier-features">
+                                    <li><i class="fa-solid fa-check"></i> Verificare Coduri PR Webasto &amp; Geamuri Duble</li>
+                                    <li><i class="fa-solid fa-check"></i> Audit Car.info Kilometraj &amp; Inspecții Tehnice</li>
+                                    <li><i class="fa-solid fa-check"></i> Dosar Oficial Certificat Imprimabil (PDF)</li>
+                                </ul>
+                            </div>
+
+                            <!-- Tier 2: VIP Concierge -->
+                            <div class="pricing-tier-card selected" id="tier-card-vip" onclick="selectPricingTier('VIP_CONCIERGE')">
+                                <span class="pricing-tier-badge">⭐ Recomandat</span>
+                                <div class="pricing-tier-header">
+                                    <div class="pricing-tier-name">VIP Concierge &amp; Import Turnkey</div>
+                                    <div class="pricing-tier-price">249 lei</div>
+                                </div>
+                                <div class="pricing-tier-desc">Vânătoare dedicată, negociere directă cu dealerul și transport asigurat.</div>
+                                <ul class="pricing-tier-features">
+                                    <li><i class="fa-solid fa-check"></i> Tot ce include Dosarul de Audit Standard</li>
+                                    <li><i class="fa-solid fa-check"></i> Specialist Dedicat pe WhatsApp (+39 320 948 1876)</li>
+                                    <li><i class="fa-solid fa-check"></i> Negociere Preț cu Dealerul &amp; Acte de Export</li>
+                                    <li><i class="fa-solid fa-check"></i> Garanție 100% Returnare Bani în Caz de Neconcordanță</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn-submit-hunt">
-                        <i class="fa-solid fa-crosshairs"></i> Lansează Vânătoarea Pentru Mine
+                        <i class="fa-solid fa-crosshairs"></i> Rezervă Serviciul &amp; Deblochează Dosarul ➔
                     </button>
-                    <p class="form-footer-note"><i class="fa-solid fa-lock"></i> Datele tale sunt 100% confidențiale. Fără spam, doar exemplare verificate chirurgical.</p>
+                    <p class="form-footer-note"><i class="fa-solid fa-lock"></i> Plată securizată 256-bit. P.IVA IT04226190041 • Garanție Returnare Fonduri.</p>
                 </form>
 
-                <!-- SUCCESS MESSAGE BANNER -->
+                <!-- CHECKOUT & SUCCESS STEP -->
                 <div id="success-banner" class="success-banner hidden">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <h3>Cererea Ta a Fost Înregistrată cu Succes!</h3>
-                    <p>Radarele DreamCarHunt™ au fost activate. Te vom contacta în cel mai scurt timp cu primele 3 opțiuni negociate din Europa.</p>
-                    <div class="success-actions">
+                    <i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 3rem;"></i>
+                    <h3 id="checkout-title">Comanda Ta de Vânătoare a Fost Înregistrată!</h3>
+                    <p id="checkout-desc">Nr. Dosar: <strong id="checkout-order-ref" style="color: #e5b842; font-family: monospace;">DCH-PENDING</strong> • Finalizează plata securizată prin PayPal sau Card Bancar pentru eliberarea dosarului tehnic.</p>
+
+                    <div class="checkout-order-summary">
+                        <div class="checkout-summary-item">
+                            <span>Vehicul Țintă</span>
+                            <strong id="summary-model">-</strong>
+                        </div>
+                        <div class="checkout-summary-item">
+                            <span>Pachet Serviciu</span>
+                            <strong id="summary-tier">VIP Concierge Hunt</strong>
+                        </div>
+                        <div class="checkout-summary-item">
+                            <span>Total de Plată</span>
+                            <strong id="summary-amount" style="color: #e5b842;">249.00 RON</strong>
+                        </div>
+                    </div>
+
+                    <div id="paypal-button-container"></div>
+
+                    <div class="success-actions" style="margin-top: 20px;">
                         <a id="lead-wa-btn" href="#" target="_blank" class="btn-wa-confirm">
-                            <i class="fa-brands fa-whatsapp"></i> Trimite Instant Detaliile pe WhatsApp (+39 320 948 1876)
+                            <i class="fa-brands fa-whatsapp"></i> Contactează Specialistul pe WhatsApp (+39 320 948 1876)
                         </a>
                     </div>
                 </div>

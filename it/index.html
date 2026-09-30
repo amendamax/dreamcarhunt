@@ -470,20 +470,76 @@
                         </div>
                     </div>
 
+                    <!-- PRICING TIER SELECTOR -->
+                    <div class="pricing-tiers-wrapper">
+                        <div class="pricing-tiers-title">
+                            <i class="fa-solid fa-shield-halved" style="color: #e5b842;"></i> Scegli il Livello di Indagine &amp; Negoziazione:
+                        </div>
+                        <div class="pricing-tiers-grid">
+                            <!-- Tier 1: Standard Audit -->
+                            <div class="pricing-tier-card standard-tier" id="tier-card-standard" onclick="selectPricingTier('STANDARD')">
+                                <div class="pricing-tier-header">
+                                    <div class="pricing-tier-name">Audit Standard PR &amp; Cronologia</div>
+                                    <div class="pricing-tier-price">€19.90</div>
+                                </div>
+                                <div class="pricing-tier-desc">Decodifica codici PR originali, cronologia Car.info e dossier di trattativa.</div>
+                                <ul class="pricing-tier-features">
+                                    <li><i class="fa-solid fa-check"></i> Verifica Codici PR Webasto &amp; Doppi Vetri</li>
+                                    <li><i class="fa-solid fa-check"></i> Audit Chilometri Reali &amp; Revisioni Svedesi</li>
+                                    <li><i class="fa-solid fa-check"></i> Dossier Certificato Stampabile (PDF)</li>
+                                </ul>
+                            </div>
+
+                            <!-- Tier 2: VIP Concierge -->
+                            <div class="pricing-tier-card selected" id="tier-card-vip" onclick="selectPricingTier('VIP_CONCIERGE')">
+                                <span class="pricing-tier-badge">⭐ Consigliato</span>
+                                <div class="pricing-tier-header">
+                                    <div class="pricing-tier-name">VIP Concierge &amp; Import Chiavi in Mano</div>
+                                    <div class="pricing-tier-price">€49.90</div>
+                                </div>
+                                <div class="pricing-tier-desc">Caccia su misura, trattativa diretta col concessionario e consegna a domicilio.</div>
+                                <ul class="pricing-tier-features">
+                                    <li><i class="fa-solid fa-check"></i> Tutto ciò che include il Dossier Standard</li>
+                                    <li><i class="fa-solid fa-check"></i> Concierge Dedicato su WhatsApp (+39 320 948 1876)</li>
+                                    <li><i class="fa-solid fa-check"></i> Trattativa Prezzo con Concessionario &amp; Pratiche Export</li>
+                                    <li><i class="fa-solid fa-check"></i> Garanzia 100% Soddisfatti o Rimborsati</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn-submit-hunt">
-                        <i class="fa-solid fa-crosshairs"></i> Avvia la Caccia per Me
+                        <i class="fa-solid fa-crosshairs"></i> Prenota il Servizio &amp; Sblocca il Dossier ➔
                     </button>
-                    <p class="form-footer-note"><i class="fa-solid fa-lock"></i> I tuoi dati sono strettamente confidenziali. Nessun intermediario inutile, solo perizie certificate.</p>
+                    <p class="form-footer-note"><i class="fa-solid fa-lock"></i> Pagamento sicuro 256-bit. P.IVA IT04226190041 • Garanzia di Rimborso.</p>
                 </form>
 
-                <!-- SUCCESS MESSAGE BANNER -->
+                <!-- CHECKOUT & SUCCESS STEP -->
                 <div id="success-banner" class="success-banner hidden">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <h3>Richiesta Ricevuta con Successo!</h3>
-                    <p>I radar continentali di DreamCarHunt™ sono stati attivati. Ti contatteremo a breve su WhatsApp/Email con le prime 3 migliori opportunità europee.</p>
-                    <div class="success-actions">
+                    <i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 3rem;"></i>
+                    <h3 id="checkout-title">Ordine di Ricerca Registrato con Successo!</h3>
+                    <p id="checkout-desc">Rif. Dossier: <strong id="checkout-order-ref" style="color: #e5b842; font-family: monospace;">DCH-PENDING</strong> • Completa il pagamento sicuro con PayPal o Carta per sbloccare il dossier ufficiale.</p>
+
+                    <div class="checkout-order-summary">
+                        <div class="checkout-summary-item">
+                            <span>Veicolo Target</span>
+                            <strong id="summary-model">-</strong>
+                        </div>
+                        <div class="checkout-summary-item">
+                            <span>Livello Servizio</span>
+                            <strong id="summary-tier">VIP Concierge Hunt</strong>
+                        </div>
+                        <div class="checkout-summary-item">
+                            <span>Importo Totale</span>
+                            <strong id="summary-amount" style="color: #e5b842;">€49.90</strong>
+                        </div>
+                    </div>
+
+                    <div id="paypal-button-container"></div>
+
+                    <div class="success-actions" style="margin-top: 20px;">
                         <a id="lead-wa-btn" href="#" target="_blank" class="btn-wa-confirm">
-                            <i class="fa-brands fa-whatsapp"></i> Invia Subito i Dettagli su WhatsApp (+39 320 948 1876)
+                            <i class="fa-brands fa-whatsapp"></i> Parla Subito col Concierge Dedicato (+39 320 948 1876)
                         </a>
                     </div>
                 </div>

@@ -21,5 +21,10 @@
       "database_name": "dreamcarhunt-db",
       "database_id": "5d26222d-f4ca-470f-ba21-0700a90ce76f"
     }
-  ]
+  ],
+  "vars": {
+    "PAYPAL_CLIENT_ID": "BAAb-_gGSEUGsqGoeo2hVONNMtoU9lYcUfcbWLM60lY6jbUfDjj1Y6Kv1XU_WRSgUzg-0j-M4hkxqccXIs",
+    "PAYPAL_CLIENT_SECRET": "EBbjYnK3du5D2ioXCqbTmWhlAgeSJ6Q-RHr6xsp0mI6UcuvNVUoJRDTf4uIhVgovgx4UlY-M8RgjM_ae",
+    "PAYPAL_MODE": "live"
+  }
 }

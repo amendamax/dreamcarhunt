@@ -422,22 +422,121 @@ function triggerSearch() {
     }
 }
 
-// --- 4. VIP CONCIERGE SUBMISSION ---
+// --- 4. VIP CONCIERGE & PAYPAL BUSINESS ENGINE ---
+window.selectedTier = 'VIP_CONCIERGE';
+
+function selectPricingTier(tier) {
+    window.selectedTier = tier;
+    const standardCard = document.getElementById('tier-card-standard');
+    const vipCard = document.getElementById('tier-card-vip');
+    if (tier === 'STANDARD') {
+        if (standardCard) standardCard.classList.add('selected');
+        if (vipCard) vipCard.classList.remove('selected');
+    } else {
+        if (standardCard) standardCard.classList.remove('selected');
+        if (vipCard) vipCard.classList.add('selected');
+    }
+}
+
+let paypalSdkPromise = null;
+function loadPayPalSdk(currency = 'EUR') {
+    if (window.paypal) return Promise.resolve(window.paypal);
+    if (paypalSdkPromise) return paypalSdkPromise;
+
+    paypalSdkPromise = fetch('/api/paypal/settings')
+        .then(res => res.json())
+        .then(data => {
+            if (!data || !data.clientId) {
+                throw new Error('PayPal client ID missing from settings');
+            }
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = `https://www.paypal.com/sdk/js?client-id=${data.clientId}&currency=${currency}&intent=capture&components=buttons`;
+                script.onload = () => resolve(window.paypal);
+                script.onerror = (err) => reject(err);
+                document.head.appendChild(script);
+            });
+        });
+
+    return paypalSdkPromise;
+}
+
+function renderPayPalButtons(orderReference, amount, currency) {
+    const container = document.getElementById('paypal-button-container');
+    if (!container) return;
+    container.innerHTML = '<div style="color:#94a3b8; font-size:13px; padding:10px;">⏳ Loading secure PayPal checkout...</div>';
+
+    loadPayPalSdk(currency)
+        .then(paypal => {
+            container.innerHTML = '';
+            paypal.Buttons({
+                style: {
+                    layout: 'vertical',
+                    color: 'gold',
+                    shape: 'rect',
+                    label: 'pay'
+                },
+                createOrder: function() {
+                    return fetch('/api/paypal/create-order', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ orderReference })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data || !data.id) throw new Error('Order creation failed');
+                        return data.id;
+                    });
+                },
+                onApprove: function(data) {
+                    container.innerHTML = '<div style="color:#10b981; font-weight:700; padding:15px;">✓ Payment authorized! Generating certified vehicle dossier...</div>';
+                    return fetch('/api/paypal/capture-order', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ orderId: data.orderID, orderReference })
+                    })
+                    .then(res => res.json())
+                    .then(captureData => {
+                        if (captureData && captureData.redirectUrl) {
+                            window.location.href = captureData.redirectUrl;
+                        } else {
+                            window.location.href = `/dossier/${orderReference}`;
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Capture error:', err);
+                        container.innerHTML = '<div style="color:#ef4444; padding:10px;">Payment error. Please contact WhatsApp support.</div>';
+                    });
+                },
+                onError: function(err) {
+                    console.error('PayPal button error:', err);
+                    container.innerHTML = '<div style="color:#f59e0b; padding:10px;">PayPal unavailable. Please reach out via WhatsApp for direct invoice.</div>';
+                }
+            }).render('#paypal-button-container');
+        })
+        .catch(err => {
+            console.warn('PayPal SDK initialization notice:', err);
+            container.innerHTML = '<div style="color:#94a3b8; font-size:13px; padding:10px;">Please use the WhatsApp direct link below to finalize your booking.</div>';
+        });
+}
+
 function submitLead(e) {
     e.preventDefault();
-    const model = document.getElementById('lead-model').value;
-    const budget = document.getElementById('lead-budget').value;
-    const name = document.getElementById('lead-name').value;
-    const phone = document.getElementById('lead-phone').value;
-    const email = document.getElementById('lead-email').value;
+    const model = document.getElementById('lead-model').value.trim();
+    const budget = document.getElementById('lead-budget').value.trim();
+    const name = document.getElementById('lead-name').value.trim();
+    const phone = document.getElementById('lead-phone').value.trim();
+    const email = document.getElementById('lead-email').value.trim();
 
     const options = [];
     document.querySelectorAll('.checkbox-row input:checked').forEach(cb => options.push(cb.value));
 
     const lang = document.documentElement.lang || 'en';
+    const currency = (lang === 'ro') ? 'RON' : 'EUR';
 
     const leadData = {
         model, budget, name, phone, email, options, lang,
+        tier: window.selectedTier,
         timestamp: new Date().toISOString()
     };
     
@@ -448,34 +547,71 @@ function submitLead(e) {
         localStorage.setItem('dreamcarhunt_leads', JSON.stringify(existingLeads));
     } catch (e) {}
 
-    // Cloudflare D1 Endpoint
+    // 1. Cloudflare D1 Leads Backup
     fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, email, model, budget, options, lang })
+    }).catch(err => console.debug('D1 notice:', err));
+
+    // 2. Create Order in car_orders table
+    fetch('/api/order/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            name, phone, email, model, budget, options, lang
+            name, phone, email, model,
+            tier: window.selectedTier,
+            currency,
+            lang
         })
-    }).then(res => res.json())
-      .then(data => console.log('Saved to Cloudflare D1:', data))
-      .catch(err => console.warn('D1 notice:', err));
+    })
+    .then(res => res.json())
+    .then(orderData => {
+        const orderRef = (orderData && orderData.orderReference) ? orderData.orderReference : `DCH-${Date.now().toString().slice(-6)}`;
+        const amount = orderData && orderData.amount ? orderData.amount : (window.selectedTier === 'STANDARD' ? 19.90 : 49.90);
+        const cur = orderData && orderData.currency ? orderData.currency : currency;
 
-    // Dynamic Multilingual WhatsApp Direct Action
-    let waMsgText = '';
-    if (lang === 'ro') {
-        waMsgText = `Salut Vasile! Sunt ${name}. Am lansat o cerere pe DreamCarHunt™:\n\n🚗 Model dorit: ${model}\n💰 Buget maxim: ${budget} €\n🛠️ Dotări PR obligatorii: ${options.join(', ') || 'Specificație de top'}\n📞 Telefon: ${phone}\n✉️ Email: ${email}`;
-    } else if (lang === 'it') {
-        waMsgText = `Ciao Vasile! Sono ${name}. Ho inviato una richiesta di ricerca su DreamCarHunt™:\n\n🚗 Modello: ${model}\n💰 Budget massimo: ${budget} €\n🛠️ Dotazioni PR: ${options.join(', ') || 'Top di gamma'}\n📞 Telefono: ${phone}\n✉️ Email: ${email}`;
-    } else {
-        waMsgText = `Hello Vasile! I am ${name}. I submitted a car hunt order on DreamCarHunt™:\n\n🚗 Model: ${model}\n💰 Max budget: €${budget}\n🛠️ Mandatory PR options: ${options.join(', ') || 'Unicorn spec'}\n📞 Phone: ${phone}\n✉️ Email: ${email}`;
-    }
+        // Populate Checkout Summary
+        const refEl = document.getElementById('checkout-order-ref');
+        const modelEl = document.getElementById('summary-model');
+        const tierEl = document.getElementById('summary-tier');
+        const amountEl = document.getElementById('summary-amount');
 
-    const waBtn = document.getElementById('lead-wa-btn');
-    if (waBtn) {
-        waBtn.href = `https://wa.me/393209481876?text=${encodeURIComponent(waMsgText)}`;
-    }
+        if (refEl) refEl.innerText = orderRef;
+        if (modelEl) modelEl.innerText = model;
+        if (tierEl) tierEl.innerText = window.selectedTier === 'STANDARD' ? 'Standard Factory Audit' : 'VIP Concierge Hunt';
+        if (amountEl) amountEl.innerText = `${amount.toFixed(2)} ${cur}`;
 
-    document.getElementById('order-form').style.display = 'none';
-    document.getElementById('success-banner').classList.remove('hidden');
+        // Dynamic WhatsApp Direct Action with Order Ref
+        let waMsgText = '';
+        if (lang === 'ro') {
+            waMsgText = `Salut Vasile! Sunt ${name}. Am lansat comanda ${orderRef} pe DreamCarHunt™:\n\n🚗 Model: ${model}\n📦 Pachet: ${window.selectedTier === 'STANDARD' ? 'Audit Standard (99 lei)' : 'VIP Concierge (249 lei)'}\n💰 Buget: ${budget} €\n🛠️ Dotări: ${options.join(', ') || 'Unicorn spec'}\n📞 Telefon: ${phone}\n✉️ Email: ${email}`;
+        } else if (lang === 'it') {
+            waMsgText = `Ciao Vasile! Sono ${name}. Ho inviato l'ordine ${orderRef} su DreamCarHunt™:\n\n🚗 Modello: ${model}\n📦 Livello: ${window.selectedTier === 'STANDARD' ? 'Audit Standard (€19.90)' : 'VIP Concierge (€49.90)'}\n💰 Budget: ${budget} €\n🛠️ Dotazioni: ${options.join(', ') || 'Top di gamma'}\n📞 Telefono: ${phone}\n✉️ Email: ${email}`;
+        } else {
+            waMsgText = `Hello Vasile! I am ${name}. I submitted order ${orderRef} on DreamCarHunt™:\n\n🚗 Model: ${model}\n📦 Tier: ${window.selectedTier === 'STANDARD' ? 'Standard Audit (€19.90)' : 'VIP Concierge (€49.90)'}\n💰 Budget: €${budget}\n🛠️ PR options: ${options.join(', ') || 'Unicorn spec'}\n📞 Phone: ${phone}\n✉️ Email: ${email}`;
+        }
+
+        const waBtn = document.getElementById('lead-wa-btn');
+        if (waBtn) {
+            waBtn.href = `https://wa.me/393209481876?text=${encodeURIComponent(waMsgText)}`;
+        }
+
+        // Switch to checkout display
+        const formEl = document.getElementById('order-form');
+        const bannerEl = document.getElementById('success-banner');
+        if (formEl) formEl.style.display = 'none';
+        if (bannerEl) bannerEl.classList.remove('hidden');
+
+        // Render live PayPal & Card Buttons
+        renderPayPalButtons(orderRef, amount, cur);
+    })
+    .catch(err => {
+        console.error('Order creation error:', err);
+        // Fallback display
+        document.getElementById('order-form').style.display = 'none';
+        document.getElementById('success-banner').classList.remove('hidden');
+    });
 }
 
 function loadLiveStats() {

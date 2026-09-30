@@ -470,20 +470,76 @@
                         </div>
                     </div>
 
+                    <!-- PRICING TIER SELECTOR -->
+                    <div class="pricing-tiers-wrapper">
+                        <div class="pricing-tiers-title">
+                            <i class="fa-solid fa-shield-halved" style="color: #e5b842;"></i> Choose Your Investigation & Negotiation Level:
+                        </div>
+                        <div class="pricing-tiers-grid">
+                            <!-- Tier 1: Standard Audit -->
+                            <div class="pricing-tier-card standard-tier" id="tier-card-standard" onclick="selectPricingTier('STANDARD')">
+                                <div class="pricing-tier-header">
+                                    <div class="pricing-tier-name">Standard Factory Audit</div>
+                                    <div class="pricing-tier-price">€19.90</div>
+                                </div>
+                                <div class="pricing-tier-desc">Official PR code decoding, Swedish registry audit & negotiation playbook.</div>
+                                <ul class="pricing-tier-features">
+                                    <li><i class="fa-solid fa-check"></i> Factory Webasto & Glass PR Verification</li>
+                                    <li><i class="fa-solid fa-check"></i> Car.info Inspection & Odometer History</li>
+                                    <li><i class="fa-solid fa-check"></i> Instant Printable Certified Dossier (PDF)</li>
+                                </ul>
+                            </div>
+
+                            <!-- Tier 2: VIP Concierge -->
+                            <div class="pricing-tier-card selected" id="tier-card-vip" onclick="selectPricingTier('VIP_CONCIERGE')">
+                                <span class="pricing-tier-badge">⭐ Recommended</span>
+                                <div class="pricing-tier-header">
+                                    <div class="pricing-tier-name">VIP Concierge Hunt</div>
+                                    <div class="pricing-tier-price">€49.90</div>
+                                </div>
+                                <div class="pricing-tier-desc">Full personal hunt, direct dealer negotiation & turnkey import coordination.</div>
+                                <ul class="pricing-tier-features">
+                                    <li><i class="fa-solid fa-check"></i> Everything in Standard Audit Dossier</li>
+                                    <li><i class="fa-solid fa-check"></i> Dedicated Concierge on WhatsApp (+39 320 948 1876)</li>
+                                    <li><i class="fa-solid fa-check"></i> Direct Seller Price Negotiation & Export Papers</li>
+                                    <li><i class="fa-solid fa-check"></i> 100% Money-Back Satisfaction Guarantee</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn-submit-hunt">
-                        <i class="fa-solid fa-crosshairs"></i> Launch My Car Hunt
+                        <i class="fa-solid fa-crosshairs"></i> Proceed to Booking & Instant Dossier ➔
                     </button>
-                    <p class="form-footer-note"><i class="fa-solid fa-lock"></i> Your information is strictly confidential. No spam, only surgically verified vehicles.</p>
+                    <p class="form-footer-note"><i class="fa-solid fa-lock"></i> Secured with 256-bit encryption. VAT IT04226190041 • Money-Back Guarantee.</p>
                 </form>
 
-                <!-- SUCCESS MESSAGE BANNER -->
+                <!-- CHECKOUT & SUCCESS STEP -->
                 <div id="success-banner" class="success-banner hidden">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <h3>Your Search Order Has Been Received!</h3>
-                    <p>The DreamCarHunt™ European radars are active. We will contact you shortly with the top 3 negotiated options across the continent.</p>
-                    <div class="success-actions">
+                    <i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 3rem;"></i>
+                    <h3 id="checkout-title">Your Vehicle Hunt Order Is Registered!</h3>
+                    <p id="checkout-desc">Dossier Ref: <strong id="checkout-order-ref" style="color: #e5b842; font-family: monospace;">DCH-PENDING</strong> • Complete payment via PayPal or Card to release your official audit dossier.</p>
+
+                    <div class="checkout-order-summary">
+                        <div class="checkout-summary-item">
+                            <span>Target Vehicle</span>
+                            <strong id="summary-model">-</strong>
+                        </div>
+                        <div class="checkout-summary-item">
+                            <span>Service Level</span>
+                            <strong id="summary-tier">VIP Concierge Hunt</strong>
+                        </div>
+                        <div class="checkout-summary-item">
+                            <span>Total Due</span>
+                            <strong id="summary-amount" style="color: #e5b842;">€49.90</strong>
+                        </div>
+                    </div>
+
+                    <div id="paypal-button-container"></div>
+
+                    <div class="success-actions" style="margin-top: 20px;">
                         <a id="lead-wa-btn" href="#" target="_blank" class="btn-wa-confirm">
-                            <i class="fa-brands fa-whatsapp"></i> Send Instantly via WhatsApp (+39 320 948 1876)
+                            <i class="fa-brands fa-whatsapp"></i> Chat with Dedicated Concierge on WhatsApp (+39 320 948 1876)
                         </a>
                     </div>
                 </div>

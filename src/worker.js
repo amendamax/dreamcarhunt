@@ -1,5 +1,6 @@
 import { MODELS } from './models_data.js';
 import { PR_OPTIONS, renderProgrammaticCarPage, generateCarSitemapXml } from './programmatic.js';
+import { createPayPalOrder, capturePayPalOrder, renderCarDossierHtml } from './paypal.js';
 
 export default {
   async fetch(request, env, ctx) {
@@ -92,6 +93,35 @@ export default {
             'Cache-Control': 'public, max-age=604800, s-maxage=2592000', // Cache at edge for 30 days
           }
         });
+      }
+    }
+
+    // 3. Certified Vehicle Dossier Viewer
+    const dossierMatch = url.pathname.match(/^\/dossier\/([a-zA-Z0-9_-]+)\/?$/i);
+    if (dossierMatch) {
+      const refCode = dossierMatch[1].toUpperCase();
+      const order = await env.dreamcarhunt_db
+        .prepare('SELECT * FROM car_orders WHERE UPPER(order_reference) = ?')
+        .bind(refCode)
+        .first();
+
+      if (order && order.payment_status === 'PAID') {
+        const html = renderCarDossierHtml(order, { capture_id: order.paypal_capture_id });
+        return new Response(html, {
+          status: 200,
+          headers: { 'Content-Type': 'text/html; charset=UTF-8' }
+        });
+      } else if (order) {
+        return new Response(
+          `<!DOCTYPE html><html><body style="background:#070d18;color:#fff;font-family:sans-serif;text-align:center;padding:50px;">
+          <h2>⏳ Payment Pending for Dossier ${refCode}</h2>
+          <p>Please complete payment to access your official vehicle intelligence audit.</p>
+          <a href="/#vip-concierge" style="color:#e5b842;text-decoration:none;font-weight:bold;">&larr; Return to DreamCarHunt</a>
+          </body></html>`,
+          { status: 402, headers: { 'Content-Type': 'text/html; charset=UTF-8' } }
+        );
+      } else {
+        return notFoundResponse();
       }
     }
 
@@ -275,6 +305,143 @@ async function handleApi(request, env, url) {
       }),
       { status: 200, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=3600' } }
     );
+  }
+
+  // 6. GET /api/paypal/settings - Public credentials & active currency
+  if (url.pathname === '/api/paypal/settings' && request.method === 'GET') {
+    return new Response(
+      JSON.stringify({
+        success: true,
+        clientId: env.PAYPAL_CLIENT_ID || '',
+        currency: 'EUR',
+        mode: env.PAYPAL_MODE || 'live'
+      }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // 7. POST /api/order/create - Register vehicle audit order
+  if (url.pathname === '/api/order/create' && request.method === 'POST') {
+    const body = await request.json();
+    const { name, phone, email, model, tier, currency, lang, vin } = body;
+
+    if (!name || !email || !model) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Name, email, and vehicle model are required.' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const cur = (currency || 'EUR').toUpperCase();
+    const isVip = (tier || '').toUpperCase() === 'VIP' || (tier || '').toUpperCase() === 'VIP_CONCIERGE';
+    const selectedTier = isVip ? 'VIP_CONCIERGE' : 'STANDARD';
+
+    let amount = 19.90;
+    if (isVip) {
+      amount = cur === 'RON' ? 249.00 : (cur === 'GBP' ? 42.90 : 49.90);
+    } else {
+      amount = cur === 'RON' ? 99.00 : (cur === 'GBP' ? 17.90 : 19.90);
+    }
+
+    const ref = `DCH-${Date.now().toString().slice(-6)}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const sql = `
+      INSERT INTO car_orders (
+        order_reference, service_tier, full_name, email, phone, car_model, vin, amount, currency, payment_status, client_lang
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'PENDING', ?)
+    `;
+    await db.prepare(sql).bind(
+      ref,
+      selectedTier,
+      name,
+      email,
+      phone || '',
+      model,
+      vin || '',
+      amount,
+      cur,
+      lang || 'en'
+    ).run();
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        orderReference: ref,
+        amount,
+        currency: cur,
+        tier: selectedTier
+      }),
+      { status: 201, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // 8. POST /api/paypal/create-order - Initialize PayPal checkout session
+  if (url.pathname === '/api/paypal/create-order' && request.method === 'POST') {
+    const body = await request.json();
+    const { orderReference } = body;
+
+    const order = await db
+      .prepare('SELECT * FROM car_orders WHERE order_reference = ?')
+      .bind(orderReference)
+      .first();
+
+    if (!order) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Order reference not found.' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const paypalOrder = await createPayPalOrder(env, order, order.amount, order.currency, order.service_tier);
+
+    if (paypalOrder && paypalOrder.id) {
+      await db
+        .prepare('UPDATE car_orders SET paypal_order_id = ?, updated_at = CURRENT_TIMESTAMP WHERE order_reference = ?')
+        .bind(paypalOrder.id, orderReference)
+        .run();
+    }
+
+    return new Response(
+      JSON.stringify(paypalOrder),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // 9. POST /api/paypal/capture-order - Capture transaction and authorize dossier
+  if (url.pathname === '/api/paypal/capture-order' && request.method === 'POST') {
+    const body = await request.json();
+    const { orderId, orderReference } = body;
+
+    const captureData = await capturePayPalOrder(env, orderId);
+
+    if (captureData.status === 'COMPLETED') {
+      await db
+        .prepare(`
+          UPDATE car_orders
+          SET payment_status = 'PAID',
+              paypal_capture_id = ?,
+              paypal_payer_email = ?,
+              updated_at = CURRENT_TIMESTAMP
+          WHERE order_reference = ?
+        `)
+        .bind(captureData.capture_id || orderId, captureData.payer_email || '', orderReference)
+        .run();
+
+      return new Response(
+        JSON.stringify({
+          success: true,
+          status: 'COMPLETED',
+          orderReference,
+          redirectUrl: `/dossier/${orderReference}`
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    } else {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Payment capture was not completed.' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
   }
 
   return new Response(JSON.stringify({ error: 'Endpoint not found' }), {
