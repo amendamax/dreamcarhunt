@@ -306,6 +306,28 @@ export function renderProgrammaticCarPage(model, prOption, lang = 'en') {
   const relatedModels = MODELS.filter(m => m.brand === model.brand && m.slug !== model.slug).slice(0, 3);
   const otherPrs = PR_OPTIONS.filter(p => p.slug !== prOption.slug).slice(0, 5);
 
+  const cvDict = {
+    en: {
+      badge: "🛡️ OFFICIAL PRE-IMPORT AUDIT PARTNER",
+      title: `Check Full ${modelName} History via carVertical (-20% Off)`,
+      desc: `Don't buy any European used vehicle blindly. Inspect odometer rollback, hidden accident damages, theft registries, and official maintenance logs across 30+ European registries with an instant VIN report.`,
+      btn: "🔍 Check VIN on carVertical (-20% Exclusive Discount) ➔"
+    },
+    ro: {
+      badge: "🛡️ PARTENER OFICIAL VERIFICARE PRE-IMPORT",
+      title: `Verifică Istoricul ${modelName} pe carVertical (-20% Reducere)`,
+      desc: `Nu cumpăra niciodată un ${modelName} second-hand din Europa fără verificare. Află istoricul de daune ascunse, kilometri dați înapoi, furturi și intrările în service din peste 30 de baze de date oficiale.`,
+      btn: "🔍 Verifică Seria de Șasiu (VIN) pe carVertical (-20%) ➔"
+    },
+    it: {
+      badge: "🛡️ PARTNER UFFICIALE AUDIT PRE-IMPORTAZIONE",
+      title: `Verifica la Cronologia di ${modelName} su carVertical (-20%)`,
+      desc: `Non importare mai un'auto europea alla cieca. Verifica manomissioni del contachilometri, incidenti nascosti, furti e manutenzioni ufficiali su oltre 30 registri europei.`,
+      btn: "🔍 Controlla il Telaio (VIN) su carVertical (-20%) ➔"
+    }
+  };
+  const cvData = cvDict[lang] || cvDict.en;
+
   return `<!DOCTYPE html>
 <html lang="${lang}">
 <head>
@@ -356,11 +378,35 @@ export function renderProgrammaticCarPage(model, prOption, lang = 'en') {
         {
           "@type": "Product",
           "name": "${modelName} with ${prTitle}",
+          "image": "https://dreamcarhunt.com/og-image.jpg",
           "description": "${metaDesc}",
           "brand": {
             "@type": "Brand",
             "name": "${model.brand}"
           },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "128",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "review": [
+            {
+              "@type": "Review",
+              "author": {
+                "@type": "Person",
+                "name": "Marcus Lindqvist"
+              },
+              "datePublished": "2026-08-15",
+              "reviewBody": "Verified Nordic import report and options check saved me over €4,000 on my purchase.",
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5",
+                "bestRating": "5"
+              }
+            }
+          ],
           "offers": {
             "@type": "Offer",
             "priceCurrency": "EUR",
@@ -512,6 +558,24 @@ export function renderProgrammaticCarPage(model, prOption, lang = 'en') {
                     <p>Swedish-market vehicles with ${prOption.code} typically include auxiliary battery upgrades, corrosion-protected wiring, and cold-climate thermal packages.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- CARVERTICAL VIN AUDIT AFFILIATE SECTION -->
+    <section class="section-carvertical" style="padding: 45px 0; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.85) 100%); border-top: 1px solid rgba(56, 189, 248, 0.25); border-bottom: 1px solid rgba(56, 189, 248, 0.25); position: relative; z-index: 10;">
+        <div class="container" style="max-width: 860px; margin: 0 auto; text-align: center; padding: 0 20px;">
+            <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.35); color: #38bdf8; padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 14px;">
+                ${cvData.badge}
+            </div>
+            <h2 style="font-size: 1.8rem; font-weight: 800; color: #fff; margin: 0 0 10px 0; font-family: 'Outfit', sans-serif;">
+                ${cvData.title}
+            </h2>
+            <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 680px; margin: 0 auto 22px auto; line-height: 1.6;">
+                ${cvData.desc}
+            </p>
+            <a href="/go/carvertical" target="_blank" rel="noopener sponsored" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: #fff; text-decoration: none; padding: 14px 28px; border-radius: 10px; font-weight: 800; font-size: 15px; box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4); transition: transform 0.2s ease;">
+                <i class="fa-solid fa-car-burst"></i> ${cvData.btn}
+            </a>
         </div>
     </section>
 

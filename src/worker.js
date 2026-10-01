@@ -37,6 +37,15 @@ export default {
       });
     }
 
+    // 0. High-Yield Partner Redirects (carVertical 20% Off - Official Everflow Deal)
+    if (url.pathname === '/go/carvertical' || url.pathname === '/out/carvertical') {
+      const vin = url.searchParams.get('vin') || url.searchParams.get('sub3') || url.searchParams.get('plate');
+      if (vin) {
+        return Response.redirect(`https://www.carvertical.deal/3NWF2RK/5NWWWN/?uid=40&source_id=AFF&sub1=dreamcarhunt&sub3=${encodeURIComponent(vin.trim().toUpperCase())}`, 307);
+      }
+      return Response.redirect('https://www.carvertical.deal/3NWF2RK/5NWWWN/?source_id=AFF&sub1=dreamcarhunt', 307);
+    }
+
     // 1. Programmatic Sitemaps for Googlebot
     if (url.pathname === '/sitemap-index.xml') {
       const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
@@ -90,7 +99,7 @@ export default {
           headers: {
             'Content-Type': 'text/html; charset=UTF-8',
             'X-Robots-Tag': 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
-            'Cache-Control': 'public, max-age=604800, s-maxage=2592000', // Cache at edge for 30 days
+            'Cache-Control': 'public, max-age=60, s-maxage=60, must-revalidate',
           }
         });
       }
