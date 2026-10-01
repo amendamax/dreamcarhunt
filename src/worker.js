@@ -153,13 +153,35 @@ export default {
       }
     }
 
-    // Serve static frontend assets (HTML, CSS, WebP, JS) with graceful 404 fallback
+    // Serve static frontend assets (HTML, CSS, WebP, JS, JSON) with aggressive edge caching
     try {
       const assetResponse = await env.ASSETS.fetch(request);
       if (assetResponse.status === 404) {
         return notFoundResponse();
       }
-      return assetResponse;
+      
+      const newHeaders = new Headers(assetResponse.headers);
+      const pathname = url.pathname.toLowerCase();
+      if (
+        pathname.endsWith('.css') ||
+        pathname.endsWith('.js') ||
+        pathname.endsWith('.webp') ||
+        pathname.endsWith('.jpg') ||
+        pathname.endsWith('.png') ||
+        pathname.endsWith('.svg') ||
+        pathname.endsWith('.woff2') ||
+        pathname.endsWith('.json')
+      ) {
+        newHeaders.set('Cache-Control', 'public, max-age=31536000, immutable');
+      } else {
+        newHeaders.set('Cache-Control', 'public, max-age=3600, must-revalidate');
+      }
+
+      return new Response(assetResponse.body, {
+        status: assetResponse.status,
+        statusText: assetResponse.statusText,
+        headers: newHeaders,
+      });
     } catch (e) {
       return notFoundResponse();
     }

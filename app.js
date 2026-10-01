@@ -634,4 +634,28 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchLiveExchangeRate();
     renderPrGrid('ALL', '');
     loadLiveStats();
+    
+    // Register PWA service worker if available
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
 });
+
+// Interactive VIN Audit Redirect to carVertical (-20%)
+function auditVin(inputId = 'vin-input') {
+    const el = document.getElementById(inputId);
+    const vin = el ? el.value.trim().toUpperCase() : '';
+    const lang = document.documentElement.lang || 'en';
+    
+    if (!vin || vin.length < 5) {
+        const msg = lang === 'ro' 
+            ? 'Te rugăm să introduci o serie de șasiu validă (VIN).' 
+            : (lang === 'it' ? 'Inserisci un numero di telaio (VIN) valido.' : 'Please enter a valid Chassis / VIN code.');
+        alert(msg);
+        if (el) el.focus();
+        return;
+    }
+    
+    window.open('/go/carvertical?vin=' + encodeURIComponent(vin), '_blank');
+}
+

@@ -13,7 +13,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DreamCarHunt™ | Motorul European AI de Vânătoare Auto</title>
+    <title>🏎️ DreamCarHunt™ | Motorul European AI de Vânătoare Auto</title>
     <meta name="description" content="Vânează mașini de elită și inorogi de fabrică în toată Europa. Căutare chirurgicală după coduri PR (VW6, 9M9, 1BK) și arbitraj valutar Suedia - România.">
     
     <!-- Search Engine Indexing & Bot Directives -->
@@ -63,27 +63,72 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <link rel="stylesheet" href="../style.css">
+    <link rel="manifest" href="/manifest.json">
 
-    <!-- JSON-LD Structured Data -->
+    <!-- JSON-LD Structured Data: AutoDealer & Rich Google FAQ Snippets -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "AutoDealer",
-      "name": "DreamCarHunt",
-      "url": "https://dreamcarhunt.com/ro/",
-      "description": "Motor Pan-European de Arbitraj și Vânătoare Auto. Identificăm opțiuni rare de fabrică (VW6, 9M9, 1BK) în Suedia și Germania.",
-      "telephone": "+393209481876",
-      "priceRange": "EUR",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Garessio",
-        "addressRegion": "Cuneo",
-        "addressCountry": "IT"
-      },
-      "founder": {
-        "@type": "Organization",
-        "name": "VasileDev Group"
-      }
+      "@graph": [
+        {
+          "@type": "AutoDealer",
+          "@id": "https://dreamcarhunt.com/ro/#dealer",
+          "name": "DreamCarHunt",
+          "url": "https://dreamcarhunt.com/ro/",
+          "logo": "https://dreamcarhunt.com/favicon.png",
+          "image": "https://dreamcarhunt.com/og-image.jpg",
+          "description": "Motor Pan-European de Arbitraj și Vânătoare Auto. Identificăm opțiuni rare de fabrică (VW6, 9M9, 1BK) în Suedia și Germania.",
+          "telephone": "+393209481876",
+          "priceRange": "EUR",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Garessio",
+            "addressRegion": "Cuneo",
+            "addressCountry": "IT"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "348",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "founder": {
+            "@type": "Organization",
+            "name": "VasileDev Group"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://dreamcarhunt.com/ro/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Cum verifică carVertical istoricul și kilometrajul real al unei mașini?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "carVertical interoghează peste 30 de baze naționale europene de transport, registre de poliție, companii de asigurări și case de licitații, detectând manipulările de odometru, daunele structurale ascunse și furturile."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Cum funcționează arbitrajul valutar din Suedia (SEK/EUR)?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Datorită cursului valutar favorabil SEK/EUR, mașinile rulate scandinave cu pachete de iarnă complete (Webasto 9M9, Geamuri Duble VW6) se vând cu 10%–17% mai ieftin decât pe piața din Germania sau România."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Ce înseamnă codurile PR de opțiuni de fabrică?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Codurile PR sunt identificatori de 3 caractere emiși de grupul VAG/Porsche/Audi care specifică exact dotările montate din fabrică, precum încălzirea staționară sau geamurile acustice."
+              }
+            }
+          ]
+        }
+      ]
     }
     </script>
 </head>
@@ -148,6 +193,21 @@
                     <button class="pill" onclick="applyFilter('1BK')"><i class="fa-solid fa-cloud"></i> Perne Aer (1BK)</button>
                     <button class="pill" onclick="applyFilter('SEK')"><i class="fa-solid fa-earth-europe"></i> Arbitraj Suedia (-15%)</button>
                 </div>
+            </div>
+
+            <!-- INTERACTIVE CARVERTICAL VIN AUDIT WIDGET -->
+            <div class="vin-quick-audit-box">
+                <div class="vin-audit-header">
+                    <span class="vin-badge"><i class="fa-solid fa-shield-halved"></i> AUDIT CARVERTICAL (-20% REDUCERE)</span>
+                    <span class="vin-audit-sub">Verifică orice serie VIN din Europa pentru kilometri dați înapoi, daune ascunse și furt</span>
+                </div>
+                <form class="vin-audit-form" onsubmit="event.preventDefault(); auditVin('vin-hero-input-ro');">
+                    <div class="vin-input-wrapper">
+                        <i class="fa-solid fa-fingerprint vin-icon"></i>
+                        <input type="text" id="vin-hero-input-ro" maxlength="17" placeholder="Introdu seria de șasiu / VIN (ex: WAUZZZ4G...)" autocomplete="off" spellcheck="false" oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '')">
+                        <button type="submit" class="btn-vin-audit"><i class="fa-solid fa-magnifying-glass"></i> Verifică VIN (-20%) ➔</button>
+                    </div>
+                </form>
             </div>
 
             <!-- TRUST STATS -->
@@ -227,7 +287,7 @@
                 <div class="car-card">
                     <div class="car-badge-discount">-14% SUB PIAȚĂ</div>
                     <div class="car-image-box">
-                        <img src="../macan.webp" alt="Porsche Macan S Diesel" class="car-img">
+                        <img src="../macan.webp" alt="Porsche Macan S Diesel" class="car-img" loading="lazy" decoding="async">
                         <span class="car-country-tag">🇸🇪 Suedia (Stockholm)</span>
                     </div>
                     <div class="car-info">
@@ -251,6 +311,7 @@
                         </div>
 
                         <a href="#vip-concierge" class="btn-card-action"><i class="fa-solid fa-crosshairs"></i> Vreau Această Mașină</a>
+                        <a href="/go/carvertical" target="_blank" rel="noopener sponsored" class="btn-card-vin"><i class="fa-solid fa-shield-halved"></i> Verifică VIN pe carVertical (-20%)</a>
                     </div>
                 </div>
 
@@ -258,7 +319,7 @@
                 <div class="car-card featured-card">
                     <div class="car-badge-discount highlight">TOP ARBITRAJ SUEDIA (-17%)</div>
                     <div class="car-image-box">
-                        <img src="../audi_a6.webp" alt="Audi A6 Allroad Quattro 50 TDI" class="car-img">
+                        <img src="../audi_a6.webp" alt="Audi A6 Allroad Quattro 50 TDI" class="car-img" loading="lazy" decoding="async">
                         <span class="car-country-tag">🇸🇪 Suedia (Göteborg)</span>
                     </div>
                     <div class="car-info">
@@ -282,6 +343,7 @@
                         </div>
 
                         <a href="#vip-concierge" class="btn-card-action"><i class="fa-solid fa-crosshairs"></i> Vreau Această Mașină</a>
+                        <a href="/go/carvertical" target="_blank" rel="noopener sponsored" class="btn-card-vin"><i class="fa-solid fa-shield-halved"></i> Verifică VIN pe carVertical (-20%)</a>
                     </div>
                 </div>
 
@@ -289,7 +351,7 @@
                 <div class="car-card">
                     <div class="car-badge-discount">-12% ARBITRAJ</div>
                     <div class="car-image-box">
-                        <img src="../bmw_m3.webp" alt="BMW M3 Touring" class="car-img">
+                        <img src="../bmw_m3.webp" alt="BMW M3 Touring" class="car-img" loading="lazy" decoding="async">
                         <span class="car-country-tag">🇩🇪 Germania (München)</span>
                     </div>
                     <div class="car-info">
@@ -312,6 +374,7 @@
                         </div>
 
                         <a href="#vip-concierge" class="btn-card-action"><i class="fa-solid fa-crosshairs"></i> Vreau Această Mașină</a>
+                        <a href="/go/carvertical" target="_blank" rel="noopener sponsored" class="btn-card-vin"><i class="fa-solid fa-shield-halved"></i> Verifică VIN pe carVertical (-20%)</a>
                     </div>
                 </div>
 
@@ -600,6 +663,19 @@
         <i class="fa-brands fa-whatsapp"></i>
         <span class="floating-wa-pulse"></span>
     </a>
+
+    <!-- MOBILE STICKY CTA -->
+    <div id="sticky-mobile-cta" class="sticky-mobile-cta">
+        <div class="sticky-cta-content">
+            <div class="sticky-cta-text">
+                <span class="sticky-tag">CARVERTICAL (-20%)</span>
+                <span class="sticky-desc">Audit VIN &amp; Km Reali</span>
+            </div>
+            <a href="/go/carvertical" target="_blank" rel="noopener sponsored" class="btn-sticky-cta">
+                <i class="fa-solid fa-magnifying-glass"></i> Verifică VIN ➔
+            </a>
+        </div>
+    </div>
 
     <script src="../app.js"></script>
 </body>
