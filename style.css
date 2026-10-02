@@ -695,20 +695,25 @@ body::before {
 
 .benefit-list {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .benefit-list li {
     font-size: 0.95rem;
     color: #cbd5e1;
     margin-bottom: 14px;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    display: block;
+    position: relative;
+    padding-left: 28px;
+    line-height: 1.6;
 }
 
 .benefit-list li i {
+    position: absolute;
+    left: 0;
+    top: 4px;
     color: var(--accent-green);
-    margin-top: 4px;
 }
 
 .benefit-list li strong {
@@ -761,9 +766,24 @@ body::before {
 .res-row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 12px;
     font-size: 0.9rem;
-    padding: 6px 0;
+    padding: 8px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.res-row span {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.35;
+}
+
+.res-row strong {
+    flex-shrink: 0;
+    white-space: nowrap;
+    text-align: right;
+    font-weight: 700;
 }
 
 .res-row.highlight {
@@ -771,6 +791,12 @@ body::before {
     padding-top: 10px;
     font-size: 1.05rem;
     color: var(--accent-green);
+}
+
+.res-row.highlight div {
+    flex-shrink: 0;
+    white-space: nowrap;
+    text-align: right;
 }
 
 .calc-note {
@@ -1157,6 +1183,32 @@ body::before {
     }
     .benefit-list li {
         font-size: 0.88rem;
+        padding-left: 26px;
+        line-height: 1.55;
+    }
+    .calc-card {
+        padding: 18px 12px;
+    }
+    .calc-results {
+        padding: 10px 10px;
+    }
+    .res-row {
+        font-size: 0.82rem;
+        gap: 8px;
+        padding: 7px 0;
+    }
+    .res-row span {
+        font-size: 0.82rem;
+        line-height: 1.35;
+    }
+    .res-row strong {
+        font-size: 0.88rem;
+    }
+    .res-row.highlight {
+        font-size: 0.95rem;
+    }
+    .res-row.highlight strong {
+        font-size: 1rem;
     }
 
     /* Form on mobile */
@@ -1190,13 +1242,13 @@ body::before {
         justify-content: center;
     }
 
-    /* Floating WhatsApp Button on mobile */
+    /* Floating WhatsApp Button on mobile - floats above sticky bottom bar */
     .floating-wa {
-        width: 54px;
-        height: 54px;
-        font-size: 27px;
-        bottom: 18px;
-        right: 18px;
+        width: 52px;
+        height: 52px;
+        font-size: 26px;
+        bottom: 74px !important;
+        right: 16px !important;
     }
 
     /* Footer on mobile */
