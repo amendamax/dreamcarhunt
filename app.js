@@ -328,19 +328,25 @@ function searchPrInput(val) {
 function selectPrForHunt(code, encodedName) {
     const name = decodeURIComponent(encodedName);
     
-    // Find matching checkbox in VIP concierge form or add it
+    // Find matching checkbox in VIP concierge form and highlight it
     const checkboxes = document.querySelectorAll('.checkbox-row input[type="checkbox"]');
-    let matched = false;
     checkboxes.forEach(cb => {
         if (cb.value.includes(code) || cb.parentElement.innerText.includes(code)) {
             cb.checked = true;
-            matched = true;
+            cb.parentElement.style.transition = 'all 0.3s ease';
+            cb.parentElement.style.outline = '2px solid #38bdf8';
+            cb.parentElement.style.background = 'rgba(56, 189, 248, 0.2)';
+            cb.parentElement.style.borderRadius = '6px';
+            setTimeout(() => {
+                cb.parentElement.style.outline = 'none';
+                cb.parentElement.style.background = 'transparent';
+            }, 4000);
         }
     });
 
     const modelInput = document.getElementById('lead-model');
     if (modelInput && !modelInput.value) {
-        modelInput.value = `Model cu ${code} (${name})`;
+        modelInput.value = `Porsche Macan / Audi / BMW cu ${code}`;
     }
 
     const conciergeSection = document.getElementById('vip-concierge');
