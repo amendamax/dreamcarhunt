@@ -620,6 +620,57 @@ function submitLead(e) {
     });
 }
 
+function applyAdminBypass() {
+    const codeEl = document.getElementById('admin-passcode');
+    const statusEl = document.getElementById('bypass-status');
+    const orderRefEl = document.getElementById('checkout-order-ref');
+    
+    const adminKey = codeEl ? codeEl.value.trim() : '';
+    const orderReference = orderRefEl ? orderRefEl.innerText.trim() : '';
+
+    if (!adminKey) {
+        if (statusEl) {
+            statusEl.style.color = '#f87171';
+            statusEl.innerText = 'Please enter a VIP / Admin code.';
+        }
+        return;
+    }
+
+    if (statusEl) {
+        statusEl.style.color = '#38bdf8';
+        statusEl.innerText = '⏳ Verifying VIP code...';
+    }
+
+    fetch('/api/order/bypass', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderReference, adminKey })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success && data.redirectUrl) {
+            if (statusEl) {
+                statusEl.style.color = '#4ade80';
+                statusEl.innerText = '✓ Access granted! Redirecting to dossier...';
+            }
+            setTimeout(() => {
+                window.location.href = data.redirectUrl;
+            }, 600);
+        } else {
+            if (statusEl) {
+                statusEl.style.color = '#f87171';
+                statusEl.innerText = '✕ ' + (data.error || 'Invalid code.');
+            }
+        }
+    })
+    .catch(err => {
+        if (statusEl) {
+            statusEl.style.color = '#f87171';
+            statusEl.innerText = 'Error verifying code.';
+        }
+    });
+}
+
 function loadLiveStats() {
     fetch('/api/stats')
         .then(r => r.json())

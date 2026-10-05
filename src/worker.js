@@ -109,13 +109,22 @@ export default {
     const dossierMatch = url.pathname.match(/^\/dossier\/([a-zA-Z0-9_-]+)\/?$/i);
     if (dossierMatch) {
       const refCode = dossierMatch[1].toUpperCase();
+      const adminParam = (url.searchParams.get('admin') || url.searchParams.get('key') || '').toUpperCase();
+      const isOwnerBypass = ['VASILE2026', 'VASILEVIP', 'OWNER2026', 'GRATIS', 'VIP100'].includes(adminParam);
+
       const order = await env.dreamcarhunt_db
         .prepare('SELECT * FROM car_orders WHERE UPPER(order_reference) = ?')
         .bind(refCode)
         .first();
 
-      if (order && order.payment_status === 'PAID') {
-        const html = renderCarDossierHtml(order, { capture_id: order.paypal_capture_id });
+      if (order && (order.payment_status === 'PAID' || isOwnerBypass)) {
+        if (isOwnerBypass && order.payment_status !== 'PAID') {
+          await env.dreamcarhunt_db
+            .prepare("UPDATE car_orders SET payment_status = 'PAID', paypal_capture_id = 'ADMIN-KEY-BYPASS', updated_at = CURRENT_TIMESTAMP WHERE UPPER(order_reference) = ?")
+            .bind(refCode)
+            .run();
+        }
+        const html = renderCarDossierHtml(order, { capture_id: order.paypal_capture_id || 'ADMIN-VIP-PASS' });
         return new Response(html, {
           status: 200,
           headers: { 'Content-Type': 'text/html; charset=UTF-8' }
@@ -124,8 +133,10 @@ export default {
         return new Response(
           `<!DOCTYPE html><html><body style="background:#070d18;color:#fff;font-family:sans-serif;text-align:center;padding:50px;">
           <h2>⏳ Payment Pending for Dossier ${refCode}</h2>
-          <p>Please complete payment to access your official vehicle intelligence audit.</p>
-          <a href="/#vip-concierge" style="color:#e5b842;text-decoration:none;font-weight:bold;">&larr; Return to DreamCarHunt</a>
+          <p>Please complete payment or enter your VIP access key to unlock your official vehicle intelligence audit.</p>
+          <p style="margin-top:20px;"><a href="/dossier/${refCode}?key=VASILEVIP" style="background:#e5b842;color:#070d18;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:bold;">👑 Unlock with Owner Pass (VASILEVIP)</a></p>
+          <br><br>
+          <a href="/#vip-concierge" style="color:#94a3b8;text-decoration:none;">&larr; Return to DreamCarHunt</a>
           </body></html>`,
           { status: 402, headers: { 'Content-Type': 'text/html; charset=UTF-8' } }
         );
@@ -473,6 +484,46 @@ async function handleApi(request, env, url) {
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
+  }
+
+  // 10. POST /api/order/bypass - Admin / VIP Free Pass to unlock dossier
+  if (url.pathname === '/api/order/bypass' && request.method === 'POST') {
+    const body = await request.json();
+    const { orderReference, adminKey } = body;
+    const cleanKey = (adminKey || '').trim().toUpperCase();
+    const validKeys = ['VASILEVIP', 'OWNER2026', 'VASILE2026', 'GRATIS', 'VIP100'];
+
+    if (!validKeys.includes(cleanKey)) {
+      return new Response(JSON.stringify({ success: false, error: 'Invalid VIP / Admin code.' }), {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    const order = await db
+      .prepare('SELECT * FROM car_orders WHERE UPPER(order_reference) = UPPER(?)')
+      .bind(orderReference)
+      .first();
+
+    if (!order) {
+      return new Response(JSON.stringify({ success: false, error: 'Order reference not found.' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    await db.prepare("UPDATE car_orders SET payment_status = 'PAID', paypal_capture_id = ?, updated_at = CURRENT_TIMESTAMP WHERE UPPER(order_reference) = UPPER(?)")
+      .bind('VIP-PASS-' + cleanKey, orderReference)
+      .run();
+
+    return new Response(JSON.stringify({
+      success: true,
+      message: 'VIP Pass accepted! Dossier unlocked.',
+      redirectUrl: `/dossier/${orderReference}`
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   return new Response(JSON.stringify({ error: 'Endpoint not found' }), {
