@@ -540,6 +540,46 @@ async function handleApi(request, env, url) {
     });
   }
 
+  // 11. POST /api/order/attach-matches - Attach 24h radar scan results to an order
+  if (url.pathname === '/api/order/attach-matches' && request.method === 'POST') {
+    const body = await request.json();
+    const { orderReference, adminKey, matches } = body;
+    const cleanKey = (adminKey || '').trim().toUpperCase();
+    const validKeys = ['VASILEVIP', 'OWNER2026', 'VASILE2026', 'GRATIS', 'VIP100'];
+
+    if (!validKeys.includes(cleanKey)) {
+      return new Response(JSON.stringify({ success: false, error: 'Unauthorized.' }), {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    const order = await db
+      .prepare('SELECT * FROM car_orders WHERE UPPER(order_reference) = UPPER(?)')
+      .bind(orderReference)
+      .first();
+
+    if (!order) {
+      return new Response(JSON.stringify({ success: false, error: 'Order reference not found.' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    await db.prepare("UPDATE car_orders SET matches_json = ?, updated_at = CURRENT_TIMESTAMP WHERE UPPER(order_reference) = UPPER(?)")
+      .bind(JSON.stringify(matches || []), orderReference)
+      .run();
+
+    return new Response(JSON.stringify({
+      success: true,
+      message: 'Matches successfully attached to dossier!',
+      dossierUrl: `https://dreamcarhunt.com/dossier/${orderReference}`
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
   return new Response(JSON.stringify({ error: 'Endpoint not found' }), {
     status: 404,
     headers: { 'Content-Type': 'application/json' },

@@ -165,6 +165,62 @@ export function renderCarDossierHtml(order, captureData) {
     ];
   }
 
+  let matchesList = [];
+  try {
+    if (typeof order.matches_json === 'string' && order.matches_json.trim()) {
+      matchesList = JSON.parse(order.matches_json);
+    } else if (Array.isArray(order.matches_json)) {
+      matchesList = order.matches_json;
+    }
+  } catch (e) {}
+
+  let matchesSectionHtml = '';
+  if (matchesList && matchesList.length > 0) {
+    const cardsHtml = matchesList.slice(0, 3).map((car, idx) => `
+      <div class="vehicle-card">
+          <div class="vehicle-card-badge">🎯 OPȚIUNE SELECTATĂ #${idx + 1} &bull; RAPORT VERIFICAT</div>
+          <h3 class="vehicle-card-title">${car.title}</h3>
+          <div class="vehicle-specs-row">
+              <span class="vehicle-price">€${(car.price_eur || 0).toLocaleString()}</span>
+              <span class="vehicle-km">${(car.mileage_km || 0).toLocaleString()} km</span>
+              <span class="vehicle-year">${car.year || 2017}</span>
+              <span class="vehicle-loc">📍 ${car.city || 'Europa'} (${car.country || 'IT'})</span>
+          </div>
+          ${car.arbitrage_savings_eur ? `
+          <div class="arbitrage-savings-tag">
+              💶 Arbitraj Valutar Confirmat: Economie estimată ~€${car.arbitrage_savings_eur.toLocaleString()}
+          </div>
+          ` : ''}
+          <div class="vehicle-pr-tags">
+              ${(car.pr_badges || ['🔥 Webasto 9M9', '☁️ PASM 1BK', '☀️ Trapă 3FU']).map(b => `<span class="pr-tag">${b}</span>`).join('')}
+          </div>
+          <a href="${car.source_url}" target="_blank" class="btn-inspect-vehicle">
+              Inspectează Raportul &amp; Anunțul Oficial &rarr;
+          </a>
+      </div>
+    `).join('');
+
+    matchesSectionHtml = `
+      <div class="section-title">2. 🎯 Top 3 Vehicule Selectate Chirurgical de Radarul Nostru</div>
+      <div class="vehicles-grid">
+          ${cardsHtml}
+      </div>
+    `;
+  } else {
+    matchesSectionHtml = `
+      <div class="section-title">2. 🛰️ Radar Status: Active 24-Hour European Deployment</div>
+      <div class="radar-box">
+          <div class="radar-pulsing">
+              <span class="pulse-dot"></span>
+              <strong>RADAR 24/7 ÎN DESFĂȘURARE ACTIVĂ:</strong> Suedia (Blocket &bull; Kvd) &bull; Germania &bull; Italia
+          </div>
+          <p style="margin: 8px 0 0 0; color: #94a3b8; font-size: 13.5px; line-height: 1.5;">
+              Filtrele noastre automate scanează continuu piața în căutarea specificațiilor tale exacte (${order.car_model || 'Porsche / VAG'} sub ${order.max_budget_eur ? '€' + order.max_budget_eur.toLocaleString() : 'bugetul agreat'}). Cele mai bune 3 opțiuni negociate vor fi afișate aici și transmise prioritar pe WhatsApp.
+          </p>
+      </div>
+    `;
+  }
+
   const optionsBadgesHtml = optionsList.map(opt => `
     <div class="option-badge-item">
       <i class="check-icon">✓</i>
@@ -192,7 +248,7 @@ export function renderCarDossierHtml(order, captureData) {
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Outfit', sans-serif; background: #070d18; color: #f1f5f9; margin: 0; padding: 30px 15px; }
-        .dossier-wrap { max-width: 860px; margin: 0 auto; background: #0c1626; border: 1px solid #1e293b; border-radius: 16px; padding: 40px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7); }
+        .dossier-wrap { max-width: 880px; margin: 0 auto; background: #0c1626; border: 1px solid #1e293b; border-radius: 16px; padding: 40px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7); }
         .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #1e293b; padding-bottom: 25px; margin-bottom: 25px; }
         .logo { font-size: 26px; font-weight: 900; color: #fff; letter-spacing: -0.5px; }
         .logo span { color: #e5b842; }
@@ -200,11 +256,29 @@ export function renderCarDossierHtml(order, captureData) {
         .grid-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; background: rgba(15,23,42,0.6); border: 1px solid #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 30px; }
         .meta-item span { display: block; font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
         .meta-item strong { font-size: 15px; color: #f8fafc; font-family: 'JetBrains Mono', monospace; }
-        .section-title { font-size: 18px; color: #fff; margin: 25px 0 15px 0; border-left: 3px solid #e5b842; padding-left: 12px; }
+        .section-title { font-size: 18px; color: #fff; margin: 30px 0 15px 0; border-left: 3px solid #e5b842; padding-left: 12px; }
         .audit-box { background: rgba(14,165,233,0.06); border: 1px solid rgba(56,189,248,0.25); border-radius: 12px; padding: 20px; line-height: 1.6; margin-bottom: 25px; }
         .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin-top: 15px; }
         .option-badge-item { background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 10px 14px; font-size: 13.5px; color: #f8fafc; display: flex; align-items: center; gap: 10px; font-weight: 600; }
         .check-icon { color: #10b981; font-weight: 900; font-size: 15px; }
+        
+        .vehicles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 25px; }
+        .vehicle-card { background: #080f1d; border: 1px solid rgba(229,184,66,0.3); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
+        .vehicle-card-badge { display: inline-block; font-size: 11px; font-weight: 800; color: #e5b842; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .vehicle-card-title { font-size: 16px; font-weight: 800; color: #fff; margin: 0 0 10px 0; line-height: 1.4; }
+        .vehicle-specs-row { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; color: #94a3b8; margin-bottom: 12px; align-items: center; }
+        .vehicle-price { color: #e5b842; font-weight: 800; font-size: 17px; }
+        .arbitrage-savings-tag { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); color: #10b981; font-size: 12px; font-weight: 700; padding: 6px 10px; border-radius: 6px; margin-bottom: 12px; }
+        .vehicle-pr-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; }
+        .pr-tag { background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25); color: #38bdf8; font-size: 11px; padding: 4px 8px; border-radius: 4px; font-weight: 600; }
+        .btn-inspect-vehicle { background: #1e293b; color: #38bdf8; border: 1px solid #38bdf8; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 12.5px; font-weight: 800; text-align: center; transition: 0.2s; display: block; }
+        .btn-inspect-vehicle:hover { background: #38bdf8; color: #070d18; }
+        
+        .radar-box { background: rgba(229,184,66,0.06); border: 1px solid rgba(229,184,66,0.35); border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+        .radar-pulsing { display: flex; align-items: center; gap: 10px; color: #e5b842; font-size: 14px; font-weight: 800; letter-spacing: 0.5px; }
+        .pulse-dot { width: 10px; height: 10px; background: #e5b842; border-radius: 50%; box-shadow: 0 0 10px #e5b842; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(0.95); opacity: 0.7; } 50% { transform: scale(1.3); opacity: 1; } 100% { transform: scale(0.95); opacity: 0.7; } }
+
         .checklist { list-style: none; padding: 0; margin: 0; }
         .checklist li { padding: 10px 0; border-bottom: 1px solid #1e293b; display: flex; align-items: center; gap: 10px; font-size: 14px; }
         .checklist li:last-child { border-bottom: none; }
@@ -259,7 +333,9 @@ export function renderCarDossierHtml(order, captureData) {
             </div>
         </div>
 
-        <div class="section-title">2. Price Negotiation Strategy & Dealer Playbook</div>
+        ${matchesSectionHtml}
+
+        <div class="section-title">3. Price Negotiation Strategy & Dealer Playbook</div>
         <ul class="checklist">
             <li><i>✓</i> <strong>Swedish Krona (SEK ➔ EUR) Real-time Spread:</strong> Automatic 10%–17% arbitrage cushion locked against continental European prices.</li>
             <li><i>✓</i> <strong>Inspection of Wear Points:</strong> Air suspension valve block seal verification, auxiliary coolant line heater checks, and panoramic sunroof drain inspection protocols included.</li>
