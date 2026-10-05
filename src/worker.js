@@ -124,6 +124,18 @@ export default {
             .bind(refCode)
             .run();
         }
+
+        if (!order.mandatory_options_json || order.mandatory_options_json === '[]') {
+          const lead = await env.dreamcarhunt_db
+            .prepare('SELECT mandatory_options_json, max_budget_eur FROM leads WHERE (email = ? AND email != "") OR (phone = ? AND phone != "") ORDER BY created_at DESC LIMIT 1')
+            .bind(order.email || '', order.phone || '')
+            .first();
+          if (lead) {
+            order.mandatory_options_json = lead.mandatory_options_json;
+            if (!order.max_budget_eur) order.max_budget_eur = lead.max_budget_eur;
+          }
+        }
+
         const html = renderCarDossierHtml(order, { capture_id: order.paypal_capture_id || 'ADMIN-VIP-PASS' });
         return new Response(html, {
           status: 200,
@@ -365,7 +377,7 @@ async function handleApi(request, env, url) {
   // 7. POST /api/order/create - Register vehicle audit order
   if (url.pathname === '/api/order/create' && request.method === 'POST') {
     const body = await request.json();
-    const { name, phone, email, model, tier, currency, lang, vin } = body;
+    const { name, phone, email, model, tier, currency, lang, vin, options, budget } = body;
 
     if (!name || !email || !model) {
       return new Response(
@@ -389,8 +401,8 @@ async function handleApi(request, env, url) {
 
     const sql = `
       INSERT INTO car_orders (
-        order_reference, service_tier, full_name, email, phone, car_model, vin, amount, currency, payment_status, client_lang
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'PENDING', ?)
+        order_reference, service_tier, full_name, email, phone, car_model, vin, amount, currency, payment_status, client_lang, mandatory_options_json, max_budget_eur
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'PENDING', ?, ?, ?)
     `;
     await db.prepare(sql).bind(
       ref,
@@ -402,7 +414,9 @@ async function handleApi(request, env, url) {
       vin || '',
       amount,
       cur,
-      lang || 'en'
+      lang || 'en',
+      JSON.stringify(options || []),
+      parseInt(budget) || null
     ).run();
 
     return new Response(

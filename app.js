@@ -568,7 +568,9 @@ function submitLead(e) {
             name, phone, email, model,
             tier: window.selectedTier,
             currency,
-            lang
+            lang,
+            options,
+            budget
         })
     })
     .then(res => res.json())
