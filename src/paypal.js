@@ -197,6 +197,9 @@ export function renderCarDossierHtml(order, captureData) {
           <a href="${car.source_url}" target="_blank" class="btn-inspect-vehicle">
               Inspectează Raportul &amp; Anunțul Oficial &rarr;
           </a>
+          <a href="/go/carvertical" target="_blank" rel="noopener sponsored" class="btn-inspect-vehicle" style="background: rgba(14, 165, 233, 0.15); border: 1px solid #0284c7; color: #38bdf8; margin-top: 8px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+              <img src="/carvertical-logo-white.svg" alt="carVertical" style="height: 13px; vertical-align: middle;"> Check VIN on carVertical (-20%)
+          </a>
       </div>
     `).join('');
 
@@ -204,6 +207,16 @@ export function renderCarDossierHtml(order, captureData) {
       <div class="section-title">2. 🎯 Top 3 Vehicule Selectate Chirurgical de Radarul Nostru</div>
       <div class="vehicles-grid">
           ${cardsHtml}
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 12px; padding: 22px; margin-top: 24px; text-align: center;">
+          <div style="margin-bottom: 10px;">
+              <img src="/carvertical-logo-white.svg" alt="carVertical" style="height: 24px; width: auto; display: inline-block;">
+          </div>
+          <div style="font-weight: 800; font-size: 15px; color: #fff; margin-bottom: 6px;">Official Pre-Purchase History Partner (-20% Exclusive Discount)</div>
+          <div style="font-size: 13px; color: #94a3b8; max-width: 600px; margin: 0 auto 16px auto; line-height: 1.5;">Audit any European VIN for odometer rollbacks, hidden collision damages, theft records and digital maintenance logs across 30+ European registries.</div>
+          <a href="/go/carvertical" target="_blank" rel="noopener sponsored" style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: #fff; padding: 12px 26px; border-radius: 8px; font-weight: 800; font-size: 13.5px; text-decoration: none; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.35);">
+              <img src="/carvertical-logo-white.svg" alt="carVertical" style="height: 14px; vertical-align: middle;"> Check VIN on carVertical (-20%) ➔
+          </a>
       </div>
     `;
   } else {

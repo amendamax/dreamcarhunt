@@ -81,6 +81,37 @@ export default {
       });
     }
 
+
+    // 1.5. Programmatic SEO Directory (Hub for Googlebot to find all pages)
+    if (url.pathname === '/hunts-directory' || url.pathname === '/ro/hunts-directory' || url.pathname === '/it/hunts-directory') {
+      const match = url.pathname.match(/^\/(ro|it)\/hunts-directory/i);
+      const lang = match ? match[1].toLowerCase() : 'en';
+      const prefix = lang === 'ro' ? '/ro/' : (lang === 'it' ? '/it/' : '/');
+      const title = lang === 'ro' ? 'Toate Configurațiile DreamCarHunt' : (lang === 'it' ? 'Tutte le configurazioni DreamCarHunt' : 'All DreamCarHunt Configurations');
+      
+      let html = `<!DOCTYPE html><html lang="${lang}"><head><title>${title}</title><meta name="robots" content="index, follow"><style>body{background:#0b1320;color:#94a3b8;font-family:sans-serif;padding:40px;line-height:1.6;} a{color:#38bdf8;text-decoration:none;} a:hover{text-decoration:underline;} h1, h2{color:#fff;} ul{list-style:none;padding:0;} li{margin-bottom:8px;}</style></head><body>`;
+      html += `<h1>${title}</h1><p>Browse our extensive database of rare factory vehicle configurations.</p>`;
+      
+      for (const model of MODELS) {
+        html += `<h2 style="margin-top:30px; border-bottom:1px solid #1e293b; padding-bottom:10px;">${model.brand} ${model.name}</h2>`;
+        html += '<ul style="column-count: auto; column-width: 350px; gap: 20px;">';
+        for (const pr of PR_OPTIONS) {
+          const prTitle = pr.title[lang] || pr.title.en;
+          html += `<li><a href="${prefix}hunt/${model.slug}/${pr.slug}">${model.name} + ${pr.code} (${prTitle})</a></li>`;
+        }
+        html += '</ul>';
+      }
+      html += '</body></html>';
+      
+      return new Response(html, {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/html; charset=UTF-8',
+          'Cache-Control': 'public, max-age=86400',
+        }
+      });
+    }
+
     // 2. Programmatic SEO Landing Pages (Edge Dynamic SSR)
     // Matches: /hunt/:model/:pr OR /ro/hunt/:model/:pr OR /it/hunt/:model/:pr
     const match = url.pathname.match(/^\/(?:(it|ro)\/)?(?:hunt|vanatoare|caccia)\/([a-zA-Z0-9_-]+)\/([a-zA-Z0-9_-]+)\/?$/i);

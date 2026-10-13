@@ -561,9 +561,12 @@ export function renderProgrammaticCarPage(model, prOption, lang = 'en') {
         </div>
     </section>
 
-    <!-- CARVERTICAL VIN AUDIT AFFILIATE SECTION -->
-    <section class="section-carvertical" style="padding: 45px 0; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.85) 100%); border-top: 1px solid rgba(56, 189, 248, 0.25); border-bottom: 1px solid rgba(56, 189, 248, 0.25); position: relative; z-index: 10;">
+    <!-- CARVERTICAL VIN CHECK AFFILIATE SECTION -->
+    <section class="section-carvertical" style="padding: 50px 0; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.85) 100%); border-top: 1px solid rgba(56, 189, 248, 0.25); border-bottom: 1px solid rgba(56, 189, 248, 0.25); position: relative; z-index: 10;">
         <div class="container" style="max-width: 860px; margin: 0 auto; text-align: center; padding: 0 20px;">
+            <div style="margin-bottom: 14px;">
+                <img src="/carvertical-logo-white.svg" alt="carVertical" style="height: 28px; width: auto; display: inline-block;">
+            </div>
             <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.35); color: #38bdf8; padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 14px;">
                 ${cvData.badge}
             </div>
@@ -574,7 +577,7 @@ export function renderProgrammaticCarPage(model, prOption, lang = 'en') {
                 ${cvData.desc}
             </p>
             <a href="/go/carvertical" target="_blank" rel="noopener sponsored" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: #fff; text-decoration: none; padding: 14px 28px; border-radius: 10px; font-weight: 800; font-size: 15px; box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4); transition: transform 0.2s ease;">
-                <i class="fa-solid fa-car-burst"></i> ${cvData.btn}
+                <img src="/carvertical-logo-white.svg" alt="carVertical" style="height: 15px; vertical-align: middle; margin-right: 6px;"> ${cvData.btn}
             </a>
         </div>
     </section>
@@ -624,30 +627,29 @@ export function renderProgrammaticCarPage(model, prOption, lang = 'en') {
 
     <!-- FOOTER -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="logo" style="margin-bottom: 12px;">
-                        <span class="logo-icon"><i class="fa-solid fa-crosshairs"></i></span>
-                        <span class="logo-text">DREAMCAR<strong>HUNT</strong></span>
-                    </div>
-                    <p>The European AI Car Hunting Engine. Specialized in finding rare factory option packages through Scandinavian currency arbitrage.</p>
+        <div class="container footer-container">
+            <div class="footer-col">
+                <div class="logo" style="margin-bottom: 12px;">
+                    <span class="logo-icon"><i class="fa-solid fa-crosshairs"></i></span>
+                    <span class="logo-text">DREAMCAR<strong>HUNT</strong></span>
                 </div>
-                <div class="footer-col">
-                    <h4>Direct VIP Concierge</h4>
-                    <p>WhatsApp: <strong>+39 320 948 1876</strong></p>
-                    <p>VasileDev Group &bull; P.IVA IT04226190041</p>
-                    <p>Garessio (CN), Italy &bull; Pan-European Delivery</p>
-                </div>
-                <div class="footer-col">
-                    <h4>Global Network</h4>
-                    <p>✈️ <a href="https://airparkrefund.com" target="_blank">AirParkRefund.com</a></p>
-                    <p>🛡️ <a href="https://verifydating.net" target="_blank">VerifyDating.net</a></p>
+                <p>The European AI Car Hunting Engine. Specialized in finding rare factory option packages through Scandinavian currency arbitrage.</p>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 15px;">
+                    <span style="background: rgba(16, 185, 129, 0.12); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px;">✔️ VIES Verified EU</span>
+                    <span style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px;">🛡️ 100% Free Public Utility</span>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 DreamCarHunt™ by VasileDev Group. All rights reserved. Powered by Cloudflare Edge.</p>
+            <div class="footer-col">
+                <h4>VasileDev Group Ecosystem</h4>
+                <p>VAT / P.IVA: <code>IT04226190041</code></p>
+                <p>Locations: Garessio (CN), Italy &amp; Odobești, Romania</p>
+                <p>Direct: <a href="mailto:amendamax@vasiledev.com" style="color: #cbd5e1; text-decoration: none;">amendamax@vasiledev.com</a></p>
+                <p>WhatsApp: <strong>+39 320 948 1876</strong></p>
             </div>
+        </div>
+        <div class="footer-bottom">
+            <a href="${prefix}hunts-directory" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem; margin-top: 10px; display: inline-block;">&bull; Complete Vehicle &amp; Options Directory (Sitemap)</a>
+            <p>&copy; 2026 DreamCarHunt™ by VasileDev Group. All rights reserved. Powered by Cloudflare Edge.</p>
         </div>
     </footer>
 

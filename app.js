@@ -580,6 +580,16 @@ function submitLead(e) {
         const cur = orderData && orderData.currency ? orderData.currency : currency;
 
         // Populate Checkout Summary
+        const descEl = document.getElementById('checkout-desc');
+        if (descEl) {
+            if (lang === 'ro') {
+                descEl.innerHTML = `Nr. Dosar: <strong id="checkout-order-ref" style="color: #e5b842; font-family: monospace;">${orderRef}</strong> • Finalizează plata securizată prin PayPal sau Card Bancar pentru eliberarea dosarului tehnic.`;
+            } else if (lang === 'it') {
+                descEl.innerHTML = `Rif. Dossier: <strong id="checkout-order-ref" style="color: #e5b842; font-family: monospace;">${orderRef}</strong> • Completa il pagamento sicuro con PayPal o Carta per sbloccare il dossier ufficiale.`;
+            } else {
+                descEl.innerHTML = `Dossier Ref: <strong id="checkout-order-ref" style="color: #e5b842; font-family: monospace;">${orderRef}</strong> • Complete payment via PayPal or Card to release your official audit dossier.`;
+            }
+        }
         const refEl = document.getElementById('checkout-order-ref');
         const modelEl = document.getElementById('summary-model');
         const tierEl = document.getElementById('summary-tier');
@@ -616,6 +626,11 @@ function submitLead(e) {
     })
     .catch(err => {
         console.error('Order creation error:', err);
+        const fallbackRef = `DCH-${Date.now().toString().slice(-6)}`;
+        const descEl = document.getElementById('checkout-desc');
+        if (descEl) {
+            descEl.innerHTML = `Dossier Ref: <strong id="checkout-order-ref" style="color: #e5b842; font-family: monospace;">${fallbackRef}</strong>`;
+        }
         // Fallback display
         document.getElementById('order-form').style.display = 'none';
         document.getElementById('success-banner').classList.remove('hidden');
