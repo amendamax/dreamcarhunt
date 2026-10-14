@@ -646,6 +646,20 @@ export function renderProgrammaticCarPage(model, prOption, lang = 'en') {
                 <p>Direct: <a href="mailto:amendamax@vasiledev.com" style="color: #cbd5e1; text-decoration: none;">amendamax@vasiledev.com</a></p>
                 <p>WhatsApp: <strong>+39 320 948 1876</strong></p>
             </div>
+            <div class="footer-col">
+                <h4>Official Network</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; font-size: 0.85rem;">
+                    <a href="https://isbrokersafe.com" target="_blank" rel="noopener" style="color: #cbd5e1; text-decoration: none;">🏛️ IsBrokerSafe.com</a>
+                    <a href="https://verifydating.net" target="_blank" rel="noopener" style="color: #cbd5e1; text-decoration: none;">🛡️ VerifyDating.net</a>
+                    <a href="https://dreamcarhunt.com" style="color: #38bdf8; font-weight: 700; text-decoration: none;">🏎️ DreamCarHunt.com</a>
+                    <a href="https://airparkrefund.com" target="_blank" rel="noopener" style="color: #cbd5e1; text-decoration: none;">✈️ AirParkRefund.com</a>
+                    <a href="https://jobscamradar.com" target="_blank" rel="noopener" style="color: #cbd5e1; text-decoration: none;">💼 JobScamRadar.com</a>
+                    <a href="https://pillscamradar.com" target="_blank" rel="noopener" style="color: #cbd5e1; text-decoration: none;">💊 PillScamRadar.com</a>
+                    <a href="https://appscamradar.com" target="_blank" rel="noopener" style="color: #cbd5e1; text-decoration: none;">📱 AppScamRadar.com</a>
+                    <a href="https://calcolaincentivi.it" target="_blank" rel="noopener" style="color: #cbd5e1; text-decoration: none;">⚡ CalcolaIncentivi.it</a>
+                    <a href="https://vasiledev.com" target="_blank" rel="noopener" style="color: #cbd5e1; text-decoration: none;">👑 VasileDev.com</a>
+                </div>
+            </div>
         </div>
         <div class="footer-bottom">
             <a href="${prefix}hunts-directory" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem; margin-top: 10px; display: inline-block;">&bull; Complete Vehicle &amp; Options Directory (Sitemap)</a>
